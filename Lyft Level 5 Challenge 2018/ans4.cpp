@@ -109,7 +109,8 @@ int main()
     dragonforce();
     int n;
     cin>>n;
-    cout<<n;
+
+    vi a(n);
     
     
 }

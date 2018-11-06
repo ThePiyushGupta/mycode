@@ -6,8 +6,8 @@ if [[ -z $1 ]];then
 fi
 
 name=$1
-mkdir $name
-cd $name
+mkdir "$name"
+cd "$name"
 cat ../codechef.cpp > ans1.cpp
 cat ../codechef.cpp > ans2.cpp
 cat ../codechef.cpp > ans3.cpp

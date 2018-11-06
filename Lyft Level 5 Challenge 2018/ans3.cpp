@@ -107,9 +107,45 @@ t get()
 int main()
 {
     dragonforce();
-    int n;
-    cin>>n;
-    cout<<n;
-    
-    
+    int n, m;
+    cin >> n >> m;
+
+    if (m == 0)
+        return cout << 0, 0;
+
+    vi a(n);
+    input(a);
+
+    int k = sz(a)>0?mnv(a):1000000000;
+    vi b, d;
+
+    int x1, x2, y;
+    for (int i = 0; i < m; i++)
+    {
+        cin >> x1 >> x2 >> y;
+        if (x1 == 1 && x2 == 1000000000)
+            d.pb(x2);
+        else if (x1 == 1 && x2 >= k)
+            b.pb(x2);
+    }
+
+    sort(all(b));
+    if (sz(b) == 0)
+        return cout << sz(d), 0;
+
+    sort(all(a));
+    a.pb(1000000000);
+    n++;
+
+    int res = sz(b), ctr = 0,t=sz(b);
+    for (int i = 0; i < n - 1 && ctr < sz(b); i++)
+    {
+        while (ctr < sz(b) && b[ctr] < a[i + 1])
+            ctr++;
+
+            res = min(res, t - ctr + i + 1);
+    }
+    cout << res + sz(d);
+
+    return 0;
 }

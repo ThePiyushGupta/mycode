@@ -107,9 +107,17 @@ t get()
 int main()
 {
     dragonforce();
-    int n;
-    cin>>n;
-    cout<<n;
+    ll a,b,n,x,y;
+    cin>>n>>x>>y;
+    a=max(abs(x-1),abs(y-1));
+    b=max(abs(x-n),abs(y-n));
     
+    if (a<=b) {
+        cout<<"White";
+    }
+    else {
+        cout<<"Black";
+    }
     
+
 }

@@ -107,9 +107,44 @@ t get()
 int main()
 {
     dragonforce();
-    int n;
-    cin>>n;
-    cout<<n;
-    
-    
+    int n, m;
+    cin >> n >> m;
+    int k = n + m;
+
+    vi a(k), b(k), g, h;
+    input(a);
+    input(b);
+
+    for (int i = 0; i < k; i++)
+    {
+        if (b[i]==1)
+        {
+            h.pb(a[i]);
+        }
+        else
+            g.pb(a[i]);
+    }
+
+    vi res(m);
+
+    int st = 0, i = 0;
+    ;
+    for (i = 0; i < n && st < m - 1; i++)
+    {
+        if (abs(g[i] - h[st]) <= abs(g[i] - h[st + 1]))
+            res[st]++;
+        else
+        {
+            st++;
+            i--;
+        }
+    }
+
+    for (; i < n; i++)
+    {
+        res[m - 1]++;
+    }
+
+    output(res, cout);
+    return 0;
 }
