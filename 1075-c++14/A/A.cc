@@ -107,17 +107,29 @@ t get()
 int main()
 {
     dragonforce();
-    ll a, b, n, x, y;
-    cin >> n >> x >> y;
-    a = max(abs(x - 1), abs(y - 1));
-    b = max(abs(x - n), abs(y - n));
+    int n,t;
+    cin>>n>>t;
+    vi a,b;
+    input(a);
+    input(b);
 
-    if (a <= b)
-    {
-        cout << "White";
+    if(a[0]==0||a[t-1]==0&&b[t-1]==0)
+        return cout<<"NO",0;
+
+    if(a[t-1]==0)
+        return cout<<"NO",0;
+    
+    else{
+        
+        for(size_t i = t; i < n; i++)
+        {
+            if(a[i]+b[i]==2)
+                return cout<<"YES",0;
+        }
+
+        
     }
-    // else
-    // {
-    //     cout << "Black";
-    // }
+
+    cout<<"NO";
+
 }

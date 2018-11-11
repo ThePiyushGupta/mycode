@@ -107,10 +107,38 @@ t get()
 int main()
 {
     dragonforce();
-    int n;
-    cin>>n;
-    cout<<n;
-    
-    
-    
+    ll la, ra, ta, lb, rb, tb;
+    cin >> la >> ra >> ta >> lb >> rb >> tb;
+
+    ll k = min(la, lb);
+    la -= k;
+    lb -= k;
+    ra = ra-la;
+    rb = rb-lb;
+
+    k = min(ta, tb);
+    k = max(ta, tb) - min(ta, tb);
+    if (k == 0)
+    {
+        k = ta;
+    }
+    ll ans;
+    if (la == 0)
+    {
+        lb %= k;
+        if(ra>lb+rb)
+            ans=rb;
+        else ans=max(ra-lb,ta-(lb+rb));
+    }
+    else
+    {
+        la %= k;
+        if (rb > la + ra)
+            ans = ra;
+        else
+            ans = max(rb - la, -la - ra + tb);
+    }
+
+    cout << ans;
+    return 0;
 }

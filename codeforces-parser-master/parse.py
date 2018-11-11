@@ -22,7 +22,7 @@ import argparse
 ###########################
 language_params = {
         'c++14' : {
-            'TEMPLATE'    : '/home/piyush/Desktop/competitveCoding/codeforces-parser-master/main.cc',
+            'TEMPLATE'    : '/home/piyush/Desktop/competitveCoding/codeforces-parser-master/main.cpp',
             'DEBUG_FLAGS' : '-DDEBUG',
             'COMPILE_CMD' : 'g++ -g -std=c++17 -Wall $DBG',
             'RUN_CMD'     : './a.out'
@@ -118,6 +118,7 @@ class CodeforcesContestParser(HTMLParser):
         elif tag == 'option':
             if len(attrs) == 1:
                 regexp = re.compile(r"'[A-Z]'") # The attrs will be something like: ('value', 'X')
+                # print(regexp)
                 string = str(attrs[0])
                 search = regexp.search(string)
                 if search is not None:
@@ -220,7 +221,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--language', '-l', default="c++14", help="The programming language you want to use "
             "(c++14, go)")
-    parser.add_argument('contest', help="")
+    parser.add_argument('contest', help="c++17")
     args = parser.parse_args()
 
     contest = args.contest

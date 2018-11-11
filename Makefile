@@ -8,3 +8,6 @@ all:${name}
 
 ${name}:${name}.cpp
 	$ g++ ${flags} -o $@ $^
+
+
+

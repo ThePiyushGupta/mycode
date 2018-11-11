@@ -7,9 +7,7 @@
             "command": "make name=${fileBasenameNoExtension} -f /home/piyush/Desktop/competitveCoding/Makefile",
             "options": {
                 "cwd": "${fileDirname}"
-
             },
-            
             "group": {
                 "kind": "build",
                 "isDefault": true,
@@ -21,7 +19,7 @@
                 "panel": "shared"
             },
             "problemMatcher": {
-                "owner": "cpp",
+                "owner": "cpp,cc",
                 "fileLocation": [
                     "relative",
                     "${workspaceFolder}"
@@ -36,11 +34,5 @@
                 }
             }
         },
-        {
-            "label": "shellbuild",
-            "type": "shell",
-            "command": "echo Hello",
-            "problemMatcher": []
-        }
     ]
 }
