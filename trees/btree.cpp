@@ -25,10 +25,7 @@ Deletion
 
 
 ***************************************************************************************************************** */
-
 //the code is taken from geeksforgeeks and is similar to coremen
-
-// C++ implemntation of search() and traverse() methods
 #include <iostream>
 using namespace std;
 
@@ -107,8 +104,8 @@ class BTreeNode
                 keys[i + 1] = keys[i];
                 i--;
             }
-            // Insert the new key at found location
-            keys[i + 1] = k;
+
+            keys[i + 1] = k; // Insert the new key at found location
             n = n + 1;
         }
         else // If this node is not leaf
@@ -120,8 +117,7 @@ class BTreeNode
             // See if the found child is full
             if (C[i + 1]->n == 2 * t - 1)
             {
-                // If the child is full, then split it
-                splitChild(i + 1, C[i + 1]);
+                splitChild(i + 1, C[i + 1]); // If the child is full, then split it
 
                 // After split, the middle key of C[i] goes up and C[i] is splitted into two.  See which of the two is going to have the new key
                 if (keys[i + 1] < k)
@@ -134,8 +130,7 @@ class BTreeNode
     // A utility function to split the child y of this node Note that y must be full when this function is called
     void splitChild(int i, BTreeNode *y)
     {
-        // Create a new node which is going to store (t-1) keys of y
-        BTreeNode *z = new BTreeNode(y->t, y->leaf);
+        BTreeNode *z = new BTreeNode(y->t, y->leaf); // Create a new node which is going to store (t-1) keys of y
         z->n = t - 1;
 
         // Copy the last (t-1) keys of y to z
@@ -149,8 +144,7 @@ class BTreeNode
                 z->C[j] = y->C[j + t];
         }
 
-        // Reduce the number of keys in y
-        y->n = t - 1;
+        y->n = t - 1; // Reduce the number of keys in y
 
         // Since this node is going to have a new child, create space of new child
         for (int j = n; j >= i + 1; j--)
@@ -159,15 +153,12 @@ class BTreeNode
         // Link the new child to this node
         C[i + 1] = z;
 
-        // A key of y will move to this node. Find location of new key and move all greater keys one space ahead
+        // A key of y will move to this node.  Move all greater keys one space ahead
         for (int j = n - 1; j >= i; j--)
             keys[j + 1] = keys[j];
 
-        // Copy the middle key of y to this node
-        keys[i] = y->keys[t - 1];
-
-        // Increment count of keys in this node
-        n = n + 1;
+        keys[i] = y->keys[t - 1]; // Copy the middle key of y to this node
+        n = n + 1;                // Increment count of keys in this node
     }
 
     // A function to borrow a key from C[idx-1] and insert it into C[idx]
@@ -444,26 +435,18 @@ class BTree
     void insert(int k)
     {
         // If tree is empty
-        if (root == NULL)
-        {
-            // Allocate memory for root
-            root = new BTreeNode(t, true);
-            root->keys[0] = k; // Insert key
-            root->n = 1;       // Update number of keys in root
+        if (root == NULL){
+
+            root = new BTreeNode(t, true);              // Allocate memory for root
+            root->keys[0] = k;                          // Insert key
+            root->n = 1;                                // Update number of keys in root
         }
-        else // If tree is not empty
-        {
-            //Only  if root is full, then tree grows in height
-            if (root->n == 2 * t - 1)
-            {
-                // Allocate memory for new root
-                BTreeNode *s = new BTreeNode(t, false);
+        else{                                           // If tree is not empty
+            if (root->n == 2 * t - 1){                  //Only  if root is full, then tree grows in height
 
-                // Make old root as child of new root
-                s->C[0] = root;
-
-                // Split the old root and move 1 key to the new root
-                s->splitChild(0, root);
+                BTreeNode *s = new BTreeNode(t, false); // Allocate memory for new root
+                s->C[0] = root;                         // Make old root as child of new root
+                s->splitChild(0, root);                 // Split the old root and move 1 key to the new root
 
                 // New root has two children now.  Decide which of the two children is going to have new key
                 int i = 0;
@@ -471,10 +454,9 @@ class BTree
                     i++;
                 s->C[i]->insertNonFull(k);
 
-                // Change root
-                root = s;
+                root = s;                               // Change root
             }
-            else // If root is not full, call insertNonFull for root
+            else                                        // If root is not full, call insertNonFull for root
                 root->insertNonFull(k);
         }
     }

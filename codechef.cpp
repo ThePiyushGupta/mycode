@@ -7,8 +7,7 @@ typedef long long ll;
 typedef unsigned long long ull;
 typedef vector<string> vs;
 //*****************************************************************************************************
-vector<string> split(const string &s, char c)
-{
+vector<string> split(const string &s, char c) {
     vector<string> v;
     stringstream ss(s);
     string x;
@@ -16,9 +15,7 @@ vector<string> split(const string &s, char c)
         v.emplace_back(x);
     return move(v);
 }
-template <typename T, typename... Args>
-inline string arrStr(T arr, int n)
-{
+template <typename T, typename... Args> inline string arrStr(T arr, int n) {
     stringstream s;
     s << "[";
     for (int i = 0; i < n - 1; i++)
@@ -27,49 +24,44 @@ inline string arrStr(T arr, int n)
     return s.str();
 }
 
-#define EVARS(args...)                            \
-    {                                             \
-        __evars_begin(__LINE__);                  \
-        __evars(split(#args, ',').begin(), args); \
+#define EVARS(args...)                                                         \
+    {                                                                          \
+        __evars_begin(__LINE__);                                               \
+        __evars(split(#args, ',').begin(), args);                              \
     }
 
-inline void __evars_begin(int line)
-{
-    cerr << "#" << line << ": ";
+inline void __evars_begin(int line) { cerr << "#" << line << ": "; }
+template <typename T> inline void __evars_out_var(vector<T> val) {
+    cerr << arrStr(val, val.size());
 }
-template <typename T>
-inline void __evars_out_var(vector<T> val) { cerr << arrStr(val, val.size()); }
-template <typename T>
-inline void __evars_out_var(T *val) { cerr << arrStr(val, 10); }
-template <typename T>
-inline void __evars_out_var(T val) { cerr << val; }
+template <typename T> inline void __evars_out_var(T *val) {
+    cerr << arrStr(val, 10);
+}
+template <typename T> inline void __evars_out_var(T val) { cerr << val; }
 inline void __evars(vector<string>::iterator it) { cerr << endl; }
 
 template <typename T, typename... Args>
-inline void __evars(vector<string>::iterator it, T a, Args... args)
-{
+inline void __evars(vector<string>::iterator it, T a, Args... args) {
     cerr << it->substr((*it)[0] == ' ', it->length()) << "=";
     __evars_out_var(a);
     cerr << "; ";
     __evars(++it, args...);
 }
 //*****************************************************************************************************
-#define debug(x)                          \
-    {                                     \
-        cerr << #x << " = " << x << endl; \
-    }
+#define debug(x)                                                               \
+    { cerr << #x << " = " << x << endl; }
 #define mod 1000000007
 #define MAX 20000000
-#define test()   \
-    long long o; \
-    cin >> o;    \
+#define test()                                                                 \
+    long long o;                                                               \
+    cin >> o;                                                                  \
     while (o--)
 #define input(vec) for (unsigned int c = 0; c<vec.size(); cin>> vec[c++])
-#define output(vec, x)                                                 \
-    {                                                                  \
-        for (unsigned int c = 0; c < vec.size(); x << vec[c++] << ' ') \
-            ;                                                          \
-        x << endl;                                                     \
+#define output(vec, x)                                                         \
+    {                                                                          \
+        for (unsigned int c = 0; c < vec.size(); x << vec[c++] << ' ')         \
+            ;                                                                  \
+        x << endl;                                                             \
     }
 #define sz(k) k.size()
 #define ln(s) s.length()
@@ -78,12 +70,13 @@ inline void __evars(vector<string>::iterator it, T a, Args... args)
 #define all(x) x.begin(), x.end()
 #define finc(i, x, y) for (__typeof(x) i = x; i < y; i++)
 #define fdec(i, x, y) for (__typeof(x) i = x; i > y; i--)
-#define fincp(itr, x) for (__typeof(x.begin()) itr = x.begin(); itr != x.end(); itr++)
+#define fincp(itr, x)                                                          \
+    for (__typeof(x.begin()) itr = x.begin(); itr != x.end(); itr++)
 #define fdecp(itr, x) for (auto itr = x.end() - 1; itr != x.begin() - 1; itr--)
-#define dragonforce()                 \
-    ios_base::sync_with_stdio(false); \
-    cin.tie(NULL);                    \
-    cout.tie(NULL);                   \
+#define dragonforce()                                                          \
+    ios_base::sync_with_stdio(false);                                          \
+    cin.tie(NULL);                                                             \
+    cout.tie(NULL);                                                            \
     cerr.tie(NULL);
 #define PI (acos(-1.0))
 #define E 2.71828182845904523536
@@ -95,17 +88,14 @@ inline void __evars(vector<string>::iterator it, T a, Args... args)
 #define mnv(v) *min_element(v.begin(), v.end())
 #define mxv(v) *max_element(v.begin(), v.end())
 #define pr(x) cout << fixed << setprecision(x);
-template <class t = int>
-t get()
-{
+template <class t = int> t get() {
     t a;
     std::cin >> a;
     return a;
 }
 //************************************************************************************************************
 
-int main()
-{
+int main() {
     dragonforce();
     ll la, ra, ta, lb, rb, tb;
     cin >> la >> ra >> ta >> lb >> rb >> tb;
@@ -113,25 +103,22 @@ int main()
     ll k = min(la, lb);
     la -= k;
     lb -= k;
-    ra = ra-la;
-    rb = rb-lb;
+    ra = ra - la;
+    rb = rb - lb;
 
     k = min(ta, tb);
     k = max(ta, tb) - min(ta, tb);
-    if (k == 0)
-    {
+    if (k == 0) {
         k = ta;
     }
     ll ans;
-    if (la == 0)
-    {
+    if (la == 0) {
         lb %= k;
-        if(ra>lb+rb)
-            ans=rb;
-        else ans=max(ra-lb,ta-(lb+rb));
-    }
-    else
-    {
+        if (ra > lb + rb)
+            ans = rb;
+        else
+            ans = max(ra - lb, ta - (lb + rb));
+    } else {
         la %= k;
         if (rb > la + ra)
             ans = ra;
