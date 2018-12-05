@@ -1,0 +1,10 @@
+#output.txt
+output.txt
+
+#input.txt
+input.txt
+
+#pdf files
+*.pdf
+
+

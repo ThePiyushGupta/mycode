@@ -1,6 +1,6 @@
 input="/home/piyush/Desktop/competitveCoding/input.txt"
 output="/home/piyush/Desktop/competitveCoding/output.txt"
-flags=-Warray-bounds -std=c++17 -g
+flags=-Warray-bounds -std=c++17 -g -D DEBUG
 
 all:${name}
 	$ ./${name} <${input} >${output} 

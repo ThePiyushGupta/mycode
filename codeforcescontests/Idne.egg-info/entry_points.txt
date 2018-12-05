@@ -1,0 +1,5 @@
+
+        [console_scripts]
+        idne = idne:cli
+		parse = parse:main
+    

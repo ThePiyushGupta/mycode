@@ -23,7 +23,7 @@ import pdfkit
 ###########################
 language_params = {
     'c++14': {
-        'TEMPLATE': '/home/piyush/Desktop/competitveCoding/codeforces-parser-master/main.cpp',
+        'TEMPLATE': 'main.cpp',
         'DEBUG_FLAGS': '-DDEBUG',
         'COMPILE_CMD': 'g++ -g -std=c++17 -Wall $DBG',
         'RUN_CMD': './a.out'
@@ -248,7 +248,7 @@ def main():
     for index, problem in enumerate(content.problems):
         print ('Downloading Problem %s: %s...' %
                (problem, content.problem_names[index]))
-        folder = '%s-%s/%s/' % (contest, language, problem)
+        folder = '%s/%s/' % (contest, problem)
         call(['mkdir', '-p', folder])
         call(['cp', '-n', TEMPLATE, '%s/%s.%s' %
               (folder, problem, TEMPLATE.split('.')[1])])
