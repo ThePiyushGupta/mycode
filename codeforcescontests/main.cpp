@@ -27,12 +27,13 @@ inline string arrStr(T arr, int n)
     return s.str();
 }
 
-#define EVARS(args...)                            \
-    {                                             \
-        __evars_begin(__LINE__);                  \
-        __evars(split(#args, ',').begin(), args); \
-    }
-
+#if !defined(ONLINE_JUDGE)
+#define EVARS(args...)       \
+    __evars_begin(__LINE__); \
+    __evars(split(#args, ',').begin(), args);
+#else
+#define EVARS(args...)
+#endif // DEBUG
 inline void __evars_begin(int line)
 {
     cerr << "#" << line << ": ";
@@ -102,6 +103,7 @@ t get()
     std::cin >> a;
     return a;
 }
+int r,c;//predeclared control variables for loops
 //************************************************************************************************************
 
 int main()
@@ -110,4 +112,7 @@ int main()
     int n;
     cin >> n;
     cout << n;
+    
+    
+    
 }

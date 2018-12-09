@@ -25,7 +25,7 @@ language_params = {
     'c++14': {
         'TEMPLATE': 'main.cpp',
         'DEBUG_FLAGS': '-DDEBUG',
-        'COMPILE_CMD': 'g++ -g -std=c++17 -Wall $DBG',
+        'COMPILE_CMD': 'g++ -Wall -Wextra -std=c++17 -O2 -Wshadow -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fsanitize=address -fsanitize=undefined -fno-sanitize-recover -fstack-protector $DBG',
         'RUN_CMD': './a.out'
     },
     'go': {
