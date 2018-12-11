@@ -109,22 +109,5 @@ int r,c,n,k;//predeclared control variables for loops
 int main()
 {
     dragonforce();
-    cin>>n;
-    vi a;
-    input(a);
-
-    int res=INT_MAX;
-    r=0;
-    int smax=0;
-    for(c = 0; c < n; c++){
-        smax+=c*a[c];
-    }
-    k=smax;
-    for(c = 0; c < n; c++){
-        res=min(smax+r*c,res);
-        smax-=c*a[c];
-        r+=a[c];
-    }
-    cout<<2*res;
-
+    cin>>
 }

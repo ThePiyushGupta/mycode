@@ -103,12 +103,38 @@ t get()
     std::cin >> a;
     return a;
 }
+int c,r;
 //************************************************************************************************************
+int read(int d, int b, int c)
+{
+    cout << "1 " << d << ' ' << b << ' ' << c << endl;
+    fflush(stdout);
+    // #else
+    cin >> d;
+    return d;
+    // #endif // DEBUG
+}
 
 int main()
 {
     dragonforce();
-    int n;
-    cin >> n;
-    cout << n;
+    test()
+    {
+        int n;
+        cin >> n;
+        vi a;
+        for (c = 0; c < n; c++) {
+            a.pb(read(c, c, c));
+        }
+
+        cout << "2 ";
+        for (c = 0; c < n; c++) {
+            cout << a[c] << ' ';
+        }
+        cout<<endl;
+        fflush(stdout);
+        cin >> n;
+        if (n == -1)
+            return -1;
+    }
 }

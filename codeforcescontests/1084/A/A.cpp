@@ -7,7 +7,7 @@ typedef long long ll;
 typedef unsigned long long ull;
 typedef vector<string> vs;
 //*****************************************************************************************************
-vector<string> split(const string &s, char c)
+vector<string> split(const string& s, char c)
 {
     vector<string> v;
     stringstream ss(s);
@@ -41,7 +41,7 @@ inline void __evars_begin(int line)
 template <typename T>
 inline void __evars_out_var(vector<T> val) { cerr << arrStr(val, val.size()); }
 template <typename T>
-inline void __evars_out_var(T *val) { cerr << arrStr(val, 10); }
+inline void __evars_out_var(T* val) { cerr << arrStr(val, 10); }
 template <typename T>
 inline void __evars_out_var(T val) { cerr << val; }
 inline void __evars(vector<string>::iterator it) { cerr << endl; }
@@ -88,8 +88,8 @@ inline void __evars(vector<string>::iterator it, T a, Args... args)
     cerr.tie(NULL);
 #define PI (acos(-1.0))
 #define E 2.71828182845904523536
-#define by(x) [](const auto &a, const auto &b) { return a.x < b.x; }
-#define grsort() [](const auto &a, const auto &b) { return a > b; }
+#define by(x) [](const auto& a, const auto& b) { return a.x < b.x; }
+#define grsort() [](const auto& a, const auto& b) { return a > b; }
 #define F first
 #define S second
 #define mem(a, x) memset(a, x, sizeof(a))
@@ -103,28 +103,32 @@ t get()
     std::cin >> a;
     return a;
 }
-int r,c,n,k;//predeclared control variables for loops
+int r, c, n, k; //predeclared control variables for loops
 //************************************************************************************************************
 
 int main()
 {
     dragonforce();
-    cin>>n;
-    vi a;
+    cin >> n >> k;
+    vector<ll> a(n);
     input(a);
 
-    int res=INT_MAX;
-    r=0;
-    int smax=0;
-    for(c = 0; c < n; c++){
-        smax+=c*a[c];
-    }
-    k=smax;
-    for(c = 0; c < n; c++){
-        res=min(smax+r*c,res);
-        smax-=c*a[c];
-        r+=a[c];
-    }
-    cout<<2*res;
+    sort(all(a));
 
+    ll sum = 0;
+    for (c = 0; c < n; c++) {
+        sum += a[c] - a[0];
+    }
+
+    if (sum >= k)
+        return cout << a[0], 0;
+
+    k -= sum;
+    if (k > a[0] * n)
+        return cout << -1, 0;
+
+    if (k % n == 0)
+        cout << a[0] - k / n;
+    else
+        cout << a[0] - k / n + 1;
 }

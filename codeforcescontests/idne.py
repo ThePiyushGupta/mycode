@@ -60,17 +60,20 @@ def cli(prob_id, filename):
     click.secho('[{0}] login successful! '.format(config.username), fg='green')
     click.secho('Submitting [{1}] for problem [{0}]'.format(
         prob_id, filename), fg='green')
-    browser.open('http://codeforces.com/problemset/submit')
+    browser.open('http://codeforces.com/contest/'+prob_id[:-1]+'/submit')
+    # print(browser)
     submit_form = browser.get_form(class_='submit-form')
-    submit_form['submittedProblemCode'] = prob_id
+    # print(submit_form)
+    submit_form['submittedProblemIndex'] = prob_id[-1]
     try:
         submit_form['sourceFile'] = filename
     except Exception as e:
         click.secho('File {0} not found in current directory'.format(filename))
         return
+    # print(submit_form)
     browser.submit_form(submit_form)
 
-    if browser.url[-6:] != 'status':
+    if browser.url[-6:] != 'submit':
         click.secho(
             'Failed submission, probably you have submit the same file before', fg='red')
         return
