@@ -73,7 +73,7 @@ def cli(prob_id, filename):
     # print(submit_form)
     browser.submit_form(submit_form)
 
-    if browser.url[-6:] != 'submit':
+    if browser.url[-6:] == 'submit':
         click.secho(
             'Failed submission, probably you have submit the same file before', fg='red')
         return

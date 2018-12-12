@@ -6,3 +6,16 @@ input.txt
 
 #pdf files
 *.pdf
+
+# .out files
+*.out
+
+#my_output files
+my_output*
+output*
+
+#input files
+input*
+
+#test.sh
+test.sh

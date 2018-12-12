@@ -105,36 +105,65 @@ t get()
 }
 int r, c, n, k; //predeclared control variables for loops
 //************************************************************************************************************
+stack<int> st;
+vi wt;
+vector<vi> conn;
+vector<vi> connlen;
+vi par;
+vector <ll> res;
+ll dfs()
+{
+    int pos = st.top();
+    st.pop();
+    // int retvalue = 0;
+    ll max1 = 0, max2 = 0;
+    EVARS(conn[pos]);
+    for (int c = 0; c < sz(conn[pos]); c++) {
+        if (conn[pos][c] == par[pos])
+            continue;
+        // EVARS(conn[pos][c]);
+        st.push(conn[pos][c]);
+        par[conn[pos][c]]=pos;
+        ll k = dfs() - connlen[pos][c];
+        k = (k > 0) ? k : 0;
 
-class graphnode {
-public:
-    int wt;
-    vi conn;
-    graphnode(){
-        wt=0;
+        if (k > max1) {
+            max2 = max1;
+            max1 = k;
+        } else if (k > max2)
+            max2 = k;
     }
-};
-
-class graph {
-public:
-    int n;
-    // vi wt;
-    vector<graphnode> nodes;
-    graph(int _n)
-    {
-        n = _n;
-        nodes.resize(n);
-        for(c = 0; c < n; c++){
-            nodes[c].wt=get();
-        }
-        for(c = 0; c < n-1; c++){
-            
-        }
-    }
-};
+    res[pos]=max1+max2+wt[pos];
+    return max1+wt[pos];
+}
 
 int main()
 {
+    dragonforce();
     cin >> n;
-    graph mygraph(n);
+    wt.pb(0);
+    conn.pb(vi(0));
+    connlen.pb(vi(0));
+
+    for (c = 1; c < n+1; c++) {
+        wt.pb(get());
+        conn.pb(vi(0));
+        connlen.pb(vi(0));
+    }
+    par.resize(n+1, 0);
+    int len, na, nb;
+    for (c = 0; c < n - 1; c++) {
+        cin >> na >> nb >> len;
+        conn[na].pb(nb);
+        connlen[na].pb(len);
+        conn[nb].pb(na);
+        connlen[nb].pb(len);
+    }
+    res.resize(n+1, 0);
+    // vi par(n);
+    //input obtained
+    st.push(1);
+    EVARS(wt);
+    dfs();
+    cout<<mxv(res);
 }
