@@ -34,5 +34,38 @@
                 }
             }
         },
+        {
+            "label": "dbgbuild",
+            "type": "shell",
+            "command": "make name=${fileBasenameNoExtension} str=ha -f /home/piyush/Desktop/competitveCoding/Makefile",
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true,
+            },
+            "presentation": {
+                "echo": false,
+                "reveal": "never",
+                "focus": true,
+                "panel": "shared"
+            },
+            "problemMatcher": {
+                "owner": "cpp,cc",
+                "fileLocation": [
+                    "relative",
+                    "${workspaceFolder}"
+                ],
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            }
+        },
     ]
 }
