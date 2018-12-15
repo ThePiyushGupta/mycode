@@ -7,7 +7,7 @@ typedef long long ll;
 typedef unsigned long long ull;
 typedef vector<string> vs;
 //*****************************************************************************************************
-vector<string> split(const string &s, char c)
+vector<string> split(const string& s, char c)
 {
     vector<string> v;
     stringstream ss(s);
@@ -40,7 +40,7 @@ inline void __evars_begin(int line)
 template <typename T>
 inline void __evars_out_var(vector<T> val) { cerr << arrStr(val, val.size()); }
 template <typename T>
-inline void __evars_out_var(T *val) { cerr << arrStr(val, 10); }
+inline void __evars_out_var(T* val) { cerr << arrStr(val, 10); }
 template <typename T>
 inline void __evars_out_var(T val) { cerr << val; }
 inline void __evars(vector<string>::iterator it) { cerr << endl; }
@@ -87,8 +87,8 @@ inline void __evars(vector<string>::iterator it, T a, Args... args)
     cerr.tie(NULL);
 #define PI (acos(-1.0))
 #define E 2.71828182845904523536
-#define by(x) [](const auto &a, const auto &b) { return a.x < b.x; }
-#define grsort() [](const auto &a, const auto &b) { return a > b; }
+#define by(x) [](const auto& a, const auto& b) { return a.x < b.x; }
+#define grsort() [](const auto& a, const auto& b) { return a > b; }
 #define F first
 #define S second
 #define mem(a, x) memset(a, x, sizeof(a))
@@ -107,7 +107,30 @@ t get()
 int main()
 {
     dragonforce();
-    int n;
+    int n, c;
     cin >> n;
-    cout << n;
+    // cout << n;
+    int res = 0,t=0;
+    vi s, d;
+    for (c = 2; c <= n * n; c++) {
+        if (n % c == 0) {
+            int k = 0;
+            while (n % c == 0) {
+                k++;
+                n /= c;
+            }
+            s.pb(c);
+            int y=0;
+            // if(k>1)
+            y = 32-__builtin_clz(k)-1 + (__builtin_popcount(k) == 1 ? 0 : 2);
+             t = max(t, y+1);
+             EVARS(32 - __builtin_clz(k));
+        }
+    }
+    res = 1;
+    for (c = 0; c < sz(s); c++) {
+        res = res * s[c];
+    }
+
+    cout << res << ' '<<t;
 }

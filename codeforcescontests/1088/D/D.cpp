@@ -113,104 +113,16 @@ t getinteractive()
 }
 
 //************************************************************************************************************
-ll f, g;
-int readval(ll a, ll b)
-{
-    cout << "? " << a << ' ' << b << endl;
-    int retval = getinteractive<int>();
-    return retval;
-    // cerr << (a ^ f)<<' '<<(b^g)<<endl;
-    // if ((a ^ f) > (b ^ g)) {
-    //     return 1;
-    // } else if ((a ^ f) < (b ^ g)) {
-    //     return -1;
-    // } else {
-    //     return 0;
-    // }
-}
 
 int main()
 {
     dragonforce();
-    ll a = 0, b = 0;
-    // cin >> f >> g;
-    vi place(30);
-    place[0] = 1;
-    for (size_t i = 1; i < 30; i++) {
-        place[i] = place[i - 1] * 2;
+    int x;
+    cin >> x;
+
+    if (x == 1)
+        cout << -1;
+    else {
+        cout<<2<<' '<<x/2+1;
     }
-
-    int dig = 29;
-    ll prev, next;
-    bool decider = false, exit = false;
-    while (dig >= 0) {
-        if (decider) {
-            next = readval(a + place[dig], b + place[dig]);
-            if (exit == false) {
-                if (next < 0) {
-                    a += place[dig];
-                } else {
-                    b += place[dig];
-                }
-                dig--;
-                exit = true;
-            }
-            // EVARS(next, prev);
-            else {
-                if (prev * next < 0) {
-
-                    if (next > 0) {
-                        b += place[dig];
-                    } else {
-                        a += place[dig];
-                    }
-                    decider = false;
-                    exit=false;
-                    dig--;
-
-                } else if (prev * next > 0) {
-                    {
-                        next = readval(a, b + place[dig]);
-                        EVARS(next,a,b);
-                        if (next > 0) {
-                            a += place[dig];
-                            b += place[dig];
-                        }
-                        dig--;
-                    }
-                } else
-                    decider = false;
-    
-            }
-
-        } else {
-
-            prev = readval(a + place[dig], b);
-            next = readval(a, b + place[dig]);
-            EVARS(prev, next);
-            if (prev * next < 0) {
-
-                if (next > 0) {
-                    a += place[dig];
-                    b += place[dig];
-                }
-                dig--;
-            } else if (prev * next == 0) {
-                if(exit==false){
-                    decider=true;
-                    continue;
-                }
-                if (prev == 0) {
-                    a += place[dig];
-                } else {
-                    b += place[dig];
-                }
-                dig--;
-
-            } else {
-                decider = true;
-            }
-        }
-    }
-    cout << "! " << a << ' ' << b;
 }

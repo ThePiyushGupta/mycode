@@ -27,12 +27,13 @@ inline string arrStr(T arr, int n)
     return s.str();
 }
 
-#define EVARS(args...)                            \
-    {                                             \
-        __evars_begin(__LINE__);                  \
-        __evars(split(#args, ',').begin(), args); \
-    }
-
+#if !defined(ONLINE_JUDGE)
+#define EVARS(args...)       \
+    __evars_begin(__LINE__); \
+    __evars(split(#args, ',').begin(), args);
+#else
+#define EVARS(args...)
+#endif // DEBUG
 inline void __evars_begin(int line)
 {
     cerr << "#" << line << ": ";
@@ -102,43 +103,39 @@ t get()
     std::cin >> a;
     return a;
 }
-
-template <class t = int>
-t getinteractive()
-{
-    fflush(stdout);
-    t a;
-    cin >> a;
-    return a;
-}
-
+int r, c, n, k; //predeclared control variables for loops
 //************************************************************************************************************
 
 int main()
 {
     dragonforce();
-    int n, c = 0, r = 0;
-    cin >> n;
-    vi a(n);
-    input(a);
 
-    int beg = 0, end = 1;
-    int res = 0;
-    for (c = 0; c < n; c++) {
-        beg = c;
-        end = c;
-        while (end + 1 < n && a[end + 1] == a[end] + 1)
-            end++;
-        if (a[beg] == 1) {
-            res = max(res, end - beg);
-        } else if (a[end] == 1000) {
-            res = max(res, end - beg);
+    test()
+    {
+        string s;
+        cin >> s;
+        vi a(26);
+
+        for (c = 0; c < ln(s); c++) {
+            a[s[c] - 'a']++;
         }
-        else res=max(res,end-beg-1);
 
-        c = end;
+        int ct=0;
+        EVARS(a);
+        for(c = 0; c < 26; c++){
+            if(a[c])
+                ct++;
+        }
+        if(ct==1)
+            cout<<-1<<endl;  
+        else {
+            for(c = 0; c < 26; c++){
+                while(a[c]){
+                    cout<<char(c+'a');
+                    a[c]--;
+                }
+            }
+            cout<<endl;
+        }      
     }
-    if (res < 0)
-        res == 0;
-    cout << res;
 }

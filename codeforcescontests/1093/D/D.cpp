@@ -27,12 +27,13 @@ inline string arrStr(T arr, int n)
     return s.str();
 }
 
-#define EVARS(args...)                            \
-    {                                             \
-        __evars_begin(__LINE__);                  \
-        __evars(split(#args, ',').begin(), args); \
-    }
-
+#if !defined(ONLINE_JUDGE)
+#define EVARS(args...)       \
+    __evars_begin(__LINE__); \
+    __evars(split(#args, ',').begin(), args);
+#else
+#define EVARS(args...)
+#endif // DEBUG
 inline void __evars_begin(int line)
 {
     cerr << "#" << line << ": ";
@@ -102,43 +103,114 @@ t get()
     std::cin >> a;
     return a;
 }
-
-template <class t = int>
-t getinteractive()
-{
-    fflush(stdout);
-    t a;
-    cin >> a;
-    return a;
-}
-
+int r, c, n, k; //predeclared control variables for loops
 //************************************************************************************************************
+vector<ll> powr;
+
+class graphNode {
+public:
+    //data
+    vi adj, wt;
+    int a;
+
+    graphNode()
+    {
+        a = 0;
+    }
+};
+
+class graph {
+public:
+    //data values
+    int n;
+    vector<graphNode> nodes;
+
+    //functions
+    graph(int nodeNumber)
+    {
+        n = nodeNumber;
+        nodes.resize(n + 1);
+    }
+
+    void addEdge(int a, int b, bool weighted = false, int weight = 0)
+    {
+        nodes[a].adj.pb(b);
+        nodes[b].adj.pb(a);
+        if (weighted) {
+            nodes[a].wt.pb(weight);
+            nodes[b].wt.pb(weight);
+        }
+    }
+
+    ll findans()
+    {
+        vector<bool> visited(n + 1, false);
+        vi col(n + 1);
+        vi grcol(3);
+        grcol[1] = 1;
+        ll res = 1;
+        for (c = 1; c < n + 1; c++) {
+            if (!visited[c]) {
+                col[c] = 1;
+                if (!bfs(c, col, visited, grcol)) {
+                    return 0;
+                } else {
+                    res = (res * (powr[grcol[1]] + powr[grcol[2]])) % 998244353;
+                }
+                grcol[2] = 0;
+                grcol[1] = 1;
+            }
+        }
+        return res;
+    }
+
+    bool bfs(int p, vi& col, vector<bool>& visited, vi& grcol)
+    {
+        queue<int> q;
+        visited[p] = true;
+        q.push(p);
+        while (!q.empty()) {
+            int itr = q.front();
+            q.pop();
+            int chcol = (col[itr] == 2) ? 1 : 2;
+            for (int i = 0; i < sz(nodes[itr].adj); i++) {
+                k = nodes[itr].adj[i];
+                if (col[k] == 0 || col[k] == chcol) {
+                    if (col[k] == 0) {
+                        col[k] = chcol;
+                        grcol[chcol]++;
+                    }
+                } else
+                    return false;
+                if (!visited[nodes[itr].adj[i]]) {
+                    visited[k] = true;
+                    q.push(k);
+                }
+            }
+        }
+        return true;
+    }
+};
 
 int main()
 {
     dragonforce();
-    int n, c = 0, r = 0;
-    cin >> n;
-    vi a(n);
-    input(a);
-
-    int beg = 0, end = 1;
-    int res = 0;
-    for (c = 0; c < n; c++) {
-        beg = c;
-        end = c;
-        while (end + 1 < n && a[end + 1] == a[end] + 1)
-            end++;
-        if (a[beg] == 1) {
-            res = max(res, end - beg);
-        } else if (a[end] == 1000) {
-            res = max(res, end - beg);
-        }
-        else res=max(res,end-beg-1);
-
-        c = end;
+    powr.resize(3 * 100000);
+    ll k = 1;
+    for (c = 0; c < 3 * 100000; c++) {
+        powr[c] = k;
+        k = (k * 2) % 998244353;
     }
-    if (res < 0)
-        res == 0;
-    cout << res;
+    test()
+    {
+        int n, m;
+        cin >> n >> m;
+        graph mygraph(n);
+
+        for (c = 0; c < m; c++) {
+            mygraph.addEdge(get(), get());
+        }
+
+        cout << mygraph.findans() << endl;
+    }
 }

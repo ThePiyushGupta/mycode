@@ -7,7 +7,7 @@ typedef long long ll;
 typedef unsigned long long ull;
 typedef vector<string> vs;
 //*****************************************************************************************************
-vector<string> split(const string& s, char c)
+vector<string> split(const string &s, char c)
 {
     vector<string> v;
     stringstream ss(s);
@@ -27,12 +27,13 @@ inline string arrStr(T arr, int n)
     return s.str();
 }
 
-#define EVARS(args...)                            \
-    {                                             \
-        __evars_begin(__LINE__);                  \
-        __evars(split(#args, ',').begin(), args); \
-    }
-
+#if !defined(ONLINE_JUDGE)
+#define EVARS(args...)       \
+    __evars_begin(__LINE__); \
+    __evars(split(#args, ',').begin(), args);
+#else
+#define EVARS(args...)
+#endif // DEBUG
 inline void __evars_begin(int line)
 {
     cerr << "#" << line << ": ";
@@ -40,7 +41,7 @@ inline void __evars_begin(int line)
 template <typename T>
 inline void __evars_out_var(vector<T> val) { cerr << arrStr(val, val.size()); }
 template <typename T>
-inline void __evars_out_var(T* val) { cerr << arrStr(val, 10); }
+inline void __evars_out_var(T *val) { cerr << arrStr(val, 10); }
 template <typename T>
 inline void __evars_out_var(T val) { cerr << val; }
 inline void __evars(vector<string>::iterator it) { cerr << endl; }
@@ -87,8 +88,8 @@ inline void __evars(vector<string>::iterator it, T a, Args... args)
     cerr.tie(NULL);
 #define PI (acos(-1.0))
 #define E 2.71828182845904523536
-#define by(x) [](const auto& a, const auto& b) { return a.x < b.x; }
-#define grsort() [](const auto& a, const auto& b) { return a > b; }
+#define by(x) [](const auto &a, const auto &b) { return a.x < b.x; }
+#define grsort() [](const auto &a, const auto &b) { return a > b; }
 #define F first
 #define S second
 #define mem(a, x) memset(a, x, sizeof(a))
@@ -102,43 +103,23 @@ t get()
     std::cin >> a;
     return a;
 }
-
-template <class t = int>
-t getinteractive()
-{
-    fflush(stdout);
-    t a;
-    cin >> a;
-    return a;
-}
-
+int r,c,n,k;//predeclared control variables for loops
 //************************************************************************************************************
 
 int main()
 {
     dragonforce();
-    int n, c = 0, r = 0;
-    cin >> n;
+    cin>>n;
     vi a(n);
     input(a);
 
-    int beg = 0, end = 1;
-    int res = 0;
-    for (c = 0; c < n; c++) {
-        beg = c;
-        end = c;
-        while (end + 1 < n && a[end + 1] == a[end] + 1)
-            end++;
-        if (a[beg] == 1) {
-            res = max(res, end - beg);
-        } else if (a[end] == 1000) {
-            res = max(res, end - beg);
+    for(c = 0; c < n; c++){
+        
+        if (a[c]%2==0) {
+            cout<<a[c]/2;
         }
-        else res=max(res,end-beg-1);
+        else cout<<(1+(a[c]-3)/2);
+        cout<<endl;
+    }   
 
-        c = end;
-    }
-    if (res < 0)
-        res == 0;
-    cout << res;
 }

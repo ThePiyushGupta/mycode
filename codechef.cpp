@@ -98,7 +98,7 @@ template <class t = int> t get() {
 int main() {
     int n;
     cin>>n;
-    vi a(n);
-    cout<<a[0];   
+
+    cout<<n; 
 }
 
