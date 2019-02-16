@@ -1,5 +1,9 @@
 {
     "python.linting.pylintEnabled": false,
     "python.linting.pep8Enabled": true,
-    "python.linting.enabled": true
+    "python.linting.enabled": true,
+    "C_Cpp.clang_format_style": "Visual Studio",
+    "C_Cpp.clang_format_fallbackStyle": "Google",
+    "C_Cpp.default.intelliSenseMode": "gcc-x64",
+    "C_Cpp.autoAddFileAssociations": false,
 }

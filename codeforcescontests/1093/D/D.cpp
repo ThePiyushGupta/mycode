@@ -174,6 +174,7 @@ public:
             q.pop();
             int chcol = (col[itr] == 2) ? 1 : 2;
             for (int i = 0; i < sz(nodes[itr].adj); i++) {
+                
                 k = nodes[itr].adj[i];
                 if (col[k] == 0 || col[k] == chcol) {
                     if (col[k] == 0) {
@@ -182,6 +183,7 @@ public:
                     }
                 } else
                     return false;
+                    
                 if (!visited[nodes[itr].adj[i]]) {
                     visited[k] = true;
                     q.push(k);

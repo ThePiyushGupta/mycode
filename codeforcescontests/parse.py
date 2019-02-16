@@ -16,7 +16,7 @@ from subprocess import call
 from functools import partial, wraps
 import re
 import argparse
-import pdfkit
+import os
 
 ###########################
 # User modifiable constants
@@ -150,7 +150,6 @@ class CodeforcesContestParser(HTMLParser):
 def parse_problem(folder, contest, problem):
     url = 'http://codeforces.com/contest/%s/problem/%s' % (contest, problem)
     html = urlopen(url).read()
-    pdfkit.from_url(url, 'ques.pdf')
     parser = CodeforcesProblemParser(folder)
     parser.feed(html.decode('utf-8'))
     # .encode('utf-8') Should fix special chars problems?
@@ -226,7 +225,7 @@ def generate_test_script(folder, language, num_tests, problem):
 
 # Main function.
 def main():
-    print (VERSION)
+    print(VERSION)
     parser = argparse.ArgumentParser()
     parser.add_argument('--language', '-l', default="c++14", help="The programming language you want to use "
                         "(c++14, go)")
@@ -237,28 +236,30 @@ def main():
     language = args.language
 
     # Find contest and problems.
-    print ('Parsing contest %s for language %s, please wait...' %
-           (contest, language))
+    print('Parsing contest %s for language %s, please wait...' %
+          (contest, language))
     content = parse_contest(contest)
-    print (BOLD+GREEN_F+'*** Round name: '+content.name+' ***'+NORM)
-    print ('Found %d problems!' % (len(content.problems)))
+    print(BOLD+GREEN_F+'*** Round name: '+content.name+' ***'+NORM)
+    print('Found %d problems!' % (len(content.problems)))
 
     # Find problems and test cases.
     TEMPLATE = language_params[language]["TEMPLATE"]
     for index, problem in enumerate(content.problems):
-        print ('Downloading Problem %s: %s...' %
-               (problem, content.problem_names[index]))
+        print('Downloading Problem %s: %s...' %
+              (problem, content.problem_names[index]))
         folder = '%s/%s/' % (contest, problem)
         call(['mkdir', '-p', folder])
         call(['cp', '-n', TEMPLATE, '%s/%s.%s' %
               (folder, problem, TEMPLATE.split('.')[1])])
+        call(['code','%s/%s.cpp' % (folder,problem)])
         num_tests = parse_problem(folder, contest, problem)
-        call(['mv', '-n', 'ques.pdf', '%s/%s.pdf' % (folder, problem)])
         print('%d sample test(s) found.' % num_tests)
         generate_test_script(folder, language, num_tests, problem)
-        print ('========================================')
+        print('========================================')
 
-    print ('Use ./test.sh to run sample tests in each directory.')
+    print('Use ./test.sh to run sample tests in each directory.')
+    call(['code', '%s/A/A.cpp' % contest])
+    # print(contest)
 
 
 if __name__ == '__main__':
