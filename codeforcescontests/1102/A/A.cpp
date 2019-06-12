@@ -103,19 +103,47 @@ t get()
     std::cin >> a;
     return a;
 }
-int r,c,n,k;//predeclared control variables for loops
+int r, c, n, k; //predeclared control variables for loops
 //************************************************************************************************************
+// function to print the divisors
+vector<ll> printDivisors(ll n)
+{
+    // Vector to store half of the divisors
+    vector<ll> v, res;
+    for (int i = 2; i <= sqrt(n); i++)
+    {
+        if (n % i == 0)
+        {
+            if (n / i == i) // check if divisors are equal
+                res.pb(i);
+            else
+            {
+                res.pb(i);
+
+                // push the second divisor in the vector
+                v.push_back(n / i);
+            }
+        }
+    }
+
+    // The vector will be printed in reverse
+    for (int i = v.size() - 1; i >= 0; i--)
+        res.pb(v[i]);
+    return res;
+}
 
 int main()
 {
     dragonforce();
     int n;
-    cin>>n;
+    vi a(n),b(n);
+    input(a);
+    input(b);
+    sort(all(a));
+    sort(all(b));
 
-    if(n%4==1||n%4==2)
-        cout<<1;
-    else cout<<0;
-    
-
+    for(int c = 0; c < n; c++){
+        
+    }
 
 }

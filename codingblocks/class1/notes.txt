@@ -1,0 +1,34 @@
+emplace_back vs push_back:
+    Here are the steps to execute `push_back`:
+        construct a new (empty) element
+        add it to the end of the container
+        copy the argument into the new element in #1
+    
+    While the steps to execute `emplace_back`:
+        construct a new element using the argument values
+        add it to the end of the container
+
+lower_bound :
+    v[element_pos] >= val
+upper_bound :
+    v[element_pos] > val 
+
+List :
+    doubly linked List  
+    pretty useful study and complete at home
+
+Touple :
+
+Set and Multiset
+    Balanced Binary search Trees
+    Multiset can contain multiple elements whereas set cannot
+
+Maps :
+    custom comparators
+
+Dequeue:
+    Double ended queue
+
+
+
+    

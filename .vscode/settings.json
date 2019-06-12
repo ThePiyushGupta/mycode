@@ -6,4 +6,22 @@
     "C_Cpp.clang_format_fallbackStyle": "Google",
     "C_Cpp.default.intelliSenseMode": "gcc-x64",
     "C_Cpp.autoAddFileAssociations": false,
+    "bracketPairColorizer.consecutivePairColors": [
+        "()",
+        "[]",
+        "{}",
+        [
+            // "#838FA7",
+            "#87a3dd",
+            "#91FCF7",
+            "#56B7C3",
+            "#C7F34E",
+            "#F5BF43",
+            // "#e68a00",
+            // "#739900",
+        ],
+        "#e51400"
+    ],
+    "editor.fontSize": 20,
+    "C_Cpp.errorSquiggles": "Disabled"
 }

@@ -3,14 +3,28 @@
 using namespace std;
 
 int main() {
-    int n;
-    cin>>n;
-    here:
-    for(int c = 2; c < 10; c++){
-        if (n%c==0){
-            while(n>0){cout<<c<<' ';n-=c;}
-            return 0;
-        }
+    ll n,m;
+    cin>>n>>m;
+    int res=0;
+    while(m%2==0){
+        res++;
+        m/=2;
+
     }
-    cout<<1<<' ';n--;goto here;
+    while (m % 3 == 0)
+    {
+        res++;
+        m/= 3;
+    }
+    while (n % 2 == 0)
+    {
+        res--;
+        n /= 2;
+    }
+    while (m % 3 == 0)
+    {
+        res--;
+        n /= 3;
+    }
+    if(m!=n||res<0)
 }

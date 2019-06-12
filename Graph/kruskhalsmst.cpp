@@ -1,7 +1,7 @@
 // using adjancency list
 #include <queue>
 #include <vector>
-#include<algorithm>
+#include <algorithm>
 #define sz(a) a.size()
 #define pb push_back
 using namespace std;
@@ -10,8 +10,8 @@ typedef vector<int> vi;
 
 class graph
 {
-public:
-    vector<pair<int, pi>> edges,mstedges;
+  public:
+    vector<pair<int, pi>> edges, mstedges;
 
     int n, e;
 
@@ -23,7 +23,7 @@ public:
 
     void addedges(int a, int b, int w)
     {
-        edges.pb({ w, { a, b } });
+        edges.pb({w, {a, b}});
     }
 
     void mst()
@@ -31,23 +31,25 @@ public:
         sort(edges.begin(), edges.end());
         disjointsets dset(n);
 
-        int res=0;
+        int res = 0;
 
-        for (auto it : edges) {
-            int u=it.second.first, v=it.second.second;
-            int setu=dset.find(u),setv=dset.find(v);
-            
-            if (setu!=setv) {
+        for (auto it : edges)
+        {
+            int u = it.second.first, v = it.second.second;
+            int setu = dset.find(u), setv = dset.find(v);
+
+            if (setu != setv)
+            {
                 mstedges.pb(it);
 
-                dset.merge(setu,setv);
+                dset.merge(setu, setv);
             }
-            
         }
     }
 
-    class disjointsets {
-    public:
+    class disjointsets
+    {
+      public:
         vi par, rnk;
         int n;
 
@@ -58,7 +60,8 @@ public:
             rnk.resize(n + 1);
 
             //set every element as parent of itself
-            for (int c = 0; c < n; c++) {
+            for (int c = 0; c < n; c++)
+            {
                 par[c] = c;
             }
         }
@@ -67,7 +70,8 @@ public:
         int find(int child)
         {
 
-            if (child != par[child]) {
+            if (child != par[child])
+            {
                 par[child] = find(par[child]);
             }
             return par[child];
@@ -79,13 +83,17 @@ public:
             y = find(y);
 
             //make tree with smaller height a sub tree of the other tree
-            if (rnk[x] > rnk[y]) {
+            if (rnk[x] > rnk[y])
+            {
                 par[y] = x;
-            } else
+            }
+            else
                 par[x] = y;
 
             if (rnk[x] == rnk[y])
                 rnk[y]++;
         }
     };
+
 };
+(((())))

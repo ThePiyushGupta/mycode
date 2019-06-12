@@ -101,22 +101,55 @@ t get()
 {
     t a;
     std::cin >> a;
+
     return a;
 }
-int r,c,n,k;//predeclared control variables for loops
+int r, c, n, k; //predeclared control variables for loops
 //************************************************************************************************************
+
+int fact(int n);
+
+int nCr(int n, int r)
+{
+    return fact(n) / (fact(r) * fact(n - r));
+}
+
+// Returns factorial of n
+int fact(int n)
+{
+    int res = 1;
+    for (int i = 2; i <= n; i++)
+        res = res * i;
+    return res;
+}
 
 int main()
 {
     dragonforce();
-    string res,s;
-    cin>>n;
-    cin>>s;
-   int  i=1;
-    for(c = 0; c < n; c+=i){
-        res+=s[c];
-        i++;
-    }
-    cout<<res;
+    string snt, rec;
+    cin >> snt >> rec;
+    int a = 0, b = 0, c = 0, d = 0, e = 0;
+    for (int c = 0; c < ln(snt); c++)
+    {
+        if (snt[c] == '+')
+            a++;
+        else
+            b++;
 
+        if (rec[c] == '+')
+        {
+            a--;
+        }
+        else if (rec[c] == '-')
+        {
+            b--;
+        }
+    }
+    EVARS(a, b)
+    EVARS(pow(2, a + b));
+    EVARS(nCr(a, a + b))
+    pr(12);
+    if (a < 0 || b < 0)
+        return cout << 0, 0;
+    cout << ((double)nCr(a + b, a)) / (double)pow(2, a + b);
 }

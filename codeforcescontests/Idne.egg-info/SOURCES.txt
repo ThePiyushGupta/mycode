@@ -1,6 +1,7 @@
 README.md
 idne.py
 parse.py
+setup.py
 Idne.egg-info/PKG-INFO
 Idne.egg-info/SOURCES.txt
 Idne.egg-info/dependency_links.txt
