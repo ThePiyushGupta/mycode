@@ -2,8 +2,8 @@
     "python.linting.pylintEnabled": false,
     "python.linting.pep8Enabled": true,
     "python.linting.enabled": true,
-    "C_Cpp.clang_format_style": "Visual Studio",
-    "C_Cpp.clang_format_fallbackStyle": "Google",
+    "C_Cpp.clang_format_style": "{ BasedOnStyle: Google, UseTab: Always, IndentWidth: 4, TabWidth: 4, AllowShortIfStatementsOnASingleLine: true, IndentCaseLabels: false, ColumnLimit: 0, AccessModifierOffset: -4 }",
+    "C_Cpp.clang_format_fallbackStyle": "Mozilla",
     "C_Cpp.default.intelliSenseMode": "gcc-x64",
     "C_Cpp.autoAddFileAssociations": false,
     "bracketPairColorizer.consecutivePairColors": [
@@ -23,5 +23,9 @@
         "#e51400"
     ],
     "editor.fontSize": 20,
-    "C_Cpp.errorSquiggles": "Disabled"
+    "C_Cpp.errorSquiggles": "Enabled",
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "editor.fontFamily": "'Menlo','Consolas','DejaVu Sans Mono'",
+    "editor.fontLigatures": true
 }

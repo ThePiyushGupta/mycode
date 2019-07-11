@@ -8,7 +8,7 @@ ifeq ($(str),ha)
 endif
 
 all:${name}
-	$ ./a.out <${input} >${output}  
+	$ time ./a.out <${input} >${output}  
 
 ${name}:${name}.cpp
 

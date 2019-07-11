@@ -1,0 +1,10 @@
+                                                            GREEDY 
+https://www.spoj.com/problems/BALIFE/
+https://www.spoj.com/problems/EXPEDI/
+
+Game theory
+    N1^N2^N3 (nimsum) == 0? B:A
+    Grundy Number
+    https://www.spoj.com/problems/MMMGAME/
+    https://www.spoj.com/problems/QCJ3/
+    https://www.spoj.com/problems/GAME3/

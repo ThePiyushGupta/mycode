@@ -1,0 +1,4 @@
+unordered map
+sum of xor of all subarrays
+coupon collector problem
+bitmasking and subsets

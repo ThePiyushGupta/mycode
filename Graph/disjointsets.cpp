@@ -101,66 +101,69 @@ t get() {
 int r, c, n, k;  //predeclared control variables for loops
 //************************************************************************************************************
 
+class unnode {
+private:
+	/* data */
+public:
+	int parent, height, val;
+	unnode() {
+		// val = n;
+		height = 1;
+	}
+};
+class disjointsets {
+private:
+	/* data */
+public:
+	int n;
+	vector<unnode> nodes;
+	multiset<int> s;
+	disjointsets(int val) {
+		n = val + 1;
+		nodes.resize(n);
+		s.clear();
+		// s.insert(2);
+		// cout << *s.rbegin() - *s.begin() << endl;
+
+		for (int c = 1; c < n; c++) {
+			s.insert(1);
+			nodes[c].parent = nodes[c].val = c;
+		}
+		// cout << *s.rbegin() - *s.begin() << endl;
+	}
+
+	int find(int i) {
+		if (i == nodes[i].parent)
+			return i;
+		else
+			return nodes[i].parent = find(nodes[i].parent);
+	}
+
+	void setunion(int a, int b) {
+		a = find(a);
+		b = find(b);
+		int mx = 1;
+		if (a != b) {
+			if (nodes[b].height > nodes[a].height)
+				swap(a, b);
+			nodes[b].parent = a;
+			s.erase(s.find(nodes[a].height));
+			s.erase(s.find(nodes[b].height));
+			nodes[a].height += nodes[b].height;
+			s.insert(nodes[a].height);
+		}
+		cout << *s.rbegin() - *s.begin() << endl;
+	}
+};
+
 int main() {
 	dragonforce();
 	int n;
 	cin >> n;
-
-	vector<pair<pi, int>> b, c, curr, prev, res;
-	for (int j = 0; j < n; j++) {
-		int g, h;
-		cin >> g >> h;
-		// a[c]={g,h};
-		if (g > h)
-			b.push_back({{g, h}, j + 1});
-		else
-			c.push_back({{g, h}, j + 1});
-	}
-
-	sort(all(b));
-	sort(all(c));
-
-	EVARS(sz(b), sz(c));
-
-	for (int c = 0; c < sz(b); ++c) {
-		if (sz(curr) == 0)
-			curr.pb(b[c]);
-		else if (b[c - 1].first.second < b[c].first.first)
-			curr.pb(b[c]);
-		else {
-			if (sz(curr) > sz(prev))
-				prev = curr;
-			curr.clear();
-			curr.pb(b[c]);
-		}
-	}
-	if (sz(curr) > sz(prev))
-		prev = curr;
-	res = prev;
-	curr.clear();
-	prev.clear();
-
-	for (int j = 0; j < sz(c); ++j) {
-		if (sz(curr) == 0)
-			curr.pb(c[j]);
-		else if (c[j - 1].first.second > c[j].first.first)
-			curr.pb(c[j]);
-		else {
-			if (sz(curr) > sz(prev))
-				prev = curr;
-			curr.clear();
-			curr.pb(c[j]);
-		}
-	}
-
-	if (sz(curr) > sz(prev))
-		prev = curr;
-
-	if (sz(res) < sz(prev))
-		res = prev;
-
-	cout << sz(res) << endl;
-	for (int c = 0; c < sz(res); c++) {
-		cout << res[c].second << ' ';
+	disjointsets dj(n);
+	test() {
+		int a, b;
+		cin >> a >> b;
+		dj.setunion(a, b);
 	}
 }

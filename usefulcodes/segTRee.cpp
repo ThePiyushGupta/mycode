@@ -88,79 +88,45 @@ inline void __evars(vector<string>::iterator it, T a, Args... args) {
 #define grsort() [](const auto &a, const auto &b) { return a > b; }
 #define F first
 #define S second
-#define mem(a, x) memset(a, x, sizeof(a))
 #define mnv(v) *min_element(v.begin(), v.end())
 #define mxv(v) *max_element(v.begin(), v.end())
 #define pr(x) cout << fixed << setprecision(x);
-template <class t = int>
-t get() {
-	t a;
-	std::cin >> a;
-	return a;
-}
-int r, c, n, k;  //predeclared control variables for loops
+#define N 300005
 //************************************************************************************************************
+
+int n;
+vector<ll> seg(N << 2);
+void build(vi &a, int beg, int end, int pos) {
+	// EVARS(beg, end, pos);
+	if (beg == end)
+		seg[pos] = max(a[beg], 0);
+	else {
+		int mid = (beg + end) / 2;
+		build(a, beg, mid, (pos << 1) + 1);
+		build(a, mid + 1, end, (pos << 1) + 2);
+		int a = max(seg[(pos << 1) + 1], 0ll), b = max(seg[(pos << 1) + 2], 0ll);  // replace it with whatever result you want
+		seg[pos] = a + b;
+	}
+}
+
+int query(int qbeg, int qend, int beg, int end, int pos) {
+	EVARS(qbeg, qend, beg, end, pos);
+	if (beg >= qbeg && end <= qend) return seg[pos];
+	if (qbeg > end || qend < beg) return 0;
+	int mid = (beg + end) / 2;
+	return max(query(qbeg, qend, beg, mid, (pos << 1) + 1), query(qbeg, qend, mid + 1, end, (pos << 1) + 2));
+}
 
 int main() {
 	dragonforce();
 	int n;
 	cin >> n;
-
-	vector<pair<pi, int>> b, c, curr, prev, res;
-	for (int j = 0; j < n; j++) {
-		int g, h;
-		cin >> g >> h;
-		// a[c]={g,h};
-		if (g > h)
-			b.push_back({{g, h}, j + 1});
-		else
-			c.push_back({{g, h}, j + 1});
-	}
-
-	sort(all(b));
-	sort(all(c));
-
-	EVARS(sz(b), sz(c));
-
-	for (int c = 0; c < sz(b); ++c) {
-		if (sz(curr) == 0)
-			curr.pb(b[c]);
-		else if (b[c - 1].first.second < b[c].first.first)
-			curr.pb(b[c]);
-		else {
-			if (sz(curr) > sz(prev))
-				prev = curr;
-			curr.clear();
-			curr.pb(b[c]);
-		}
-	}
-	if (sz(curr) > sz(prev))
-		prev = curr;
-	res = prev;
-	curr.clear();
-	prev.clear();
-
-	for (int j = 0; j < sz(c); ++j) {
-		if (sz(curr) == 0)
-			curr.pb(c[j]);
-		else if (c[j - 1].first.second > c[j].first.first)
-			curr.pb(c[j]);
-		else {
-			if (sz(curr) > sz(prev))
-				prev = curr;
-			curr.clear();
-			curr.pb(c[j]);
-		}
-	}
-
-	if (sz(curr) > sz(prev))
-		prev = curr;
-
-	if (sz(res) < sz(prev))
-		res = prev;
-
-	cout << sz(res) << endl;
-	for (int c = 0; c < sz(res); c++) {
-		cout << res[c].second << ' ';
+	vi a(n);
+	input(a);
+	build(a, 0, n - 1, 0);
+	test() {
+		int a, b;
+		cin >> a >> b;
+		cout << query(a, b - 1, 0, n - 1, 0) << endl;
 	}
 }

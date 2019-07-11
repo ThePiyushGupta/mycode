@@ -92,75 +92,70 @@ inline void __evars(vector<string>::iterator it, T a, Args... args) {
 #define mnv(v) *min_element(v.begin(), v.end())
 #define mxv(v) *max_element(v.begin(), v.end())
 #define pr(x) cout << fixed << setprecision(x);
-template <class t = int>
-t get() {
-	t a;
-	std::cin >> a;
-	return a;
-}
-int r, c, n, k;  //predeclared control variables for loops
 //************************************************************************************************************
+// class segnode {
+// public:
+// 	segnode *left, *right;
+// 	int sum;
+// 	segnode() {
+// 		left = right = NULL;
+// 	};
+// };
 
+// class segmentTree {
+// private:
+// 	/* data */
+// public:
+// 	segnode *head;
+// 	segmentTree(vector<int> &a) {
+// 		head = NULL;
+// 		head = build(a, 0, a.size());
+// 	}
+// 	segnode *build(vector<int> a, int beg, int end) {
+//         if(beg)
+// 	}
+// 	~segmentTree() {}
+// };
+
+vector<ll> bit;
+ll query(ll x) {
+	ll ret = 0;
+	while (x) {
+		ret += bit[x];
+		x -= x & (-x);
+	}
+	return ret;
+}
+void update(ll x, ll val) {
+	ll ad = val;
+	while (x < bit.size()) {
+		cerr << x << ' ';
+		bit[x] += ad;
+		x += x & (-x);
+	}
+	cerr << endl;
+}
+
+ll querylr(ll l, ll r) {
+	return query(r) - query(l - 1);
+}
 int main() {
-	dragonforce();
-	int n;
+	int n, l, r;
 	cin >> n;
-
-	vector<pair<pi, int>> b, c, curr, prev, res;
-	for (int j = 0; j < n; j++) {
-		int g, h;
-		cin >> g >> h;
-		// a[c]={g,h};
-		if (g > h)
-			b.push_back({{g, h}, j + 1});
+	vi a(n);
+	input(a);
+	bit.resize(n + 1, 0);
+	for (int c = 0; c < n; c++) {
+		update(c + 1, a[c]);
+	}
+	test() {
+		// EVARS(bit);
+		char ch;
+		cin >> ch >> l >> r;
+		if (ch == 'q')
+			cout << querylr(l, r) << endl;
 		else
-			c.push_back({{g, h}, j + 1});
-	}
-
-	sort(all(b));
-	sort(all(c));
-
-	EVARS(sz(b), sz(c));
-
-	for (int c = 0; c < sz(b); ++c) {
-		if (sz(curr) == 0)
-			curr.pb(b[c]);
-		else if (b[c - 1].first.second < b[c].first.first)
-			curr.pb(b[c]);
-		else {
-			if (sz(curr) > sz(prev))
-				prev = curr;
-			curr.clear();
-			curr.pb(b[c]);
-		}
-	}
-	if (sz(curr) > sz(prev))
-		prev = curr;
-	res = prev;
-	curr.clear();
-	prev.clear();
-
-	for (int j = 0; j < sz(c); ++j) {
-		if (sz(curr) == 0)
-			curr.pb(c[j]);
-		else if (c[j - 1].first.second > c[j].first.first)
-			curr.pb(c[j]);
-		else {
-			if (sz(curr) > sz(prev))
-				prev = curr;
-			curr.clear();
-			curr.pb(c[j]);
-		}
-	}
-
-	if (sz(curr) > sz(prev))
-		prev = curr;
-
-	if (sz(res) < sz(prev))
-		res = prev;
-
-	cout << sz(res) << endl;
-	for (int c = 0; c < sz(res); c++) {
-		cout << res[c].second << ' ';
+			update(l, r);
+		// EVARS(bit);
 	}
 }

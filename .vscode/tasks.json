@@ -10,7 +10,7 @@
             },
             "group": {
                 "kind": "build",
-                "isDefault": true,
+                "isDefault": true
             },
             "presentation": {
                 "echo": false,
@@ -19,6 +19,7 @@
                 "panel": "shared"
             },
             "problemMatcher": {
+                "base": "$gcc",
                 "owner": "cpp,cc",
                 "fileLocation": [
                     "relative",
@@ -43,7 +44,7 @@
             },
             "group": {
                 "kind": "build",
-                "isDefault": true,
+                "isDefault": true
             },
             "presentation": {
                 "echo": false,
@@ -67,5 +68,22 @@
                 }
             }
         },
+        {
+            "type": "shell",
+            "label": "g++ build active file",
+            "command": "/usr/bin/g++",
+            "args": [
+                "-g",
+                "${file}",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}"
+            ],
+            "options": {
+                "cwd": "/usr/bin"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        }
     ]
 }

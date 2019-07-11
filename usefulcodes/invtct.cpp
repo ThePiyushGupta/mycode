@@ -92,75 +92,45 @@ inline void __evars(vector<string>::iterator it, T a, Args... args) {
 #define mnv(v) *min_element(v.begin(), v.end())
 #define mxv(v) *max_element(v.begin(), v.end())
 #define pr(x) cout << fixed << setprecision(x);
-template <class t = int>
-t get() {
-	t a;
-	std::cin >> a;
-	return a;
-}
-int r, c, n, k;  //predeclared control variables for loops
 //************************************************************************************************************
+vector<ll> bit;
+
+ll query(int x) {
+	ll ret = 0;
+	while (x > 0) {
+		ret += bit[x];
+		x -= x & (-x);
+	}
+	return ret;
+}
+
+void update(int x, int val) {
+	while (x < bit.size()) {
+		bit[x] += val;
+		x += x & (-x);
+	}
+}
 
 int main() {
 	dragonforce();
-	int n;
-	cin >> n;
-
-	vector<pair<pi, int>> b, c, curr, prev, res;
-	for (int j = 0; j < n; j++) {
-		int g, h;
-		cin >> g >> h;
-		// a[c]={g,h};
-		if (g > h)
-			b.push_back({{g, h}, j + 1});
-		else
-			c.push_back({{g, h}, j + 1});
-	}
-
-	sort(all(b));
-	sort(all(c));
-
-	EVARS(sz(b), sz(c));
-
-	for (int c = 0; c < sz(b); ++c) {
-		if (sz(curr) == 0)
-			curr.pb(b[c]);
-		else if (b[c - 1].first.second < b[c].first.first)
-			curr.pb(b[c]);
-		else {
-			if (sz(curr) > sz(prev))
-				prev = curr;
-			curr.clear();
-			curr.pb(b[c]);
+	bit.resize(10000005);
+	test() {
+		int n;
+		cin >> n;
+		vi a(n);
+		input(a);
+		fill(all(bit), 0);
+		// for (int c = 0; c < 20; c++) {
+		// 	cerr << bit[c] << ' ';
+		// }
+		// EVARS(a);
+		// cerr << endl;
+		ll ans = 0;
+		for (int c = 0; c < n; c++) {
+			ans += c - query(a[c]);
+			update(a[c], 1);
+			// EVARS(ans)
 		}
-	}
-	if (sz(curr) > sz(prev))
-		prev = curr;
-	res = prev;
-	curr.clear();
-	prev.clear();
-
-	for (int j = 0; j < sz(c); ++j) {
-		if (sz(curr) == 0)
-			curr.pb(c[j]);
-		else if (c[j - 1].first.second > c[j].first.first)
-			curr.pb(c[j]);
-		else {
-			if (sz(curr) > sz(prev))
-				prev = curr;
-			curr.clear();
-			curr.pb(c[j]);
-		}
-	}
-
-	if (sz(curr) > sz(prev))
-		prev = curr;
-
-	if (sz(res) < sz(prev))
-		res = prev;
-
-	cout << sz(res) << endl;
-	for (int c = 0; c < sz(res); c++) {
-		cout << res[c].second << ' ';
+		cout << ans << endl;
 	}
 }

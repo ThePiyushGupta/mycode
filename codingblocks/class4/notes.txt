@@ -1,0 +1,13 @@
+fermats little theorem:
+    if p is prime:
+        pow(a,p-1) = 1 % pow
+        pow(a,x)%p = pow(a,x%(p-1))%p
+        eulers theorem : pow(a,x)%p = pow(a,xy@(x))%p
+
+Wilsons theorem:
+    if P is prime :
+        (p-1)! % p = -1 % p = p-1;
+    
+Lucas theorem
+chinese remainder theorem:
+Mobius function

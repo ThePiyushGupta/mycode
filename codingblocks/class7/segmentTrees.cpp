@@ -100,67 +100,55 @@ t get() {
 }
 int r, c, n, k;  //predeclared control variables for loops
 //************************************************************************************************************
+vector<vi> seg;
+
+void mergesort(vi &a, int beg, int end, int pos = 0) {
+	EVARS(pos);
+	if (end == beg) {
+		seg[pos].pb(a[beg]);
+		return;
+	}
+	int mid = (end + beg) / 2;
+	mergesort(a, beg, mid, pos * 2 + 1);
+	mergesort(a, mid + 1, end, pos * 2 + 2);
+
+	vi &temp = seg[pos];
+	int g = beg, h = mid + 1;
+	while (g < mid + 1 && h <= end) {
+		if (a[g] < a[h])
+			temp.pb(a[g++]);
+		else
+			temp.pb(a[h++]);
+	}
+
+	while (g < mid + 1)
+		temp.pb(a[g++]);
+	while (h < end + 1)
+		temp.pb(a[h++]);
+	for (int c = beg; c <= end; c++) {
+		a[c] = temp[c - beg];
+	}
+}
 
 int main() {
 	dragonforce();
-	int n;
-	cin >> n;
-
-	vector<pair<pi, int>> b, c, curr, prev, res;
-	for (int j = 0; j < n; j++) {
-		int g, h;
-		cin >> g >> h;
-		// a[c]={g,h};
-		if (g > h)
-			b.push_back({{g, h}, j + 1});
-		else
-			c.push_back({{g, h}, j + 1});
-	}
-
-	sort(all(b));
-	sort(all(c));
-
-	EVARS(sz(b), sz(c));
-
-	for (int c = 0; c < sz(b); ++c) {
-		if (sz(curr) == 0)
-			curr.pb(b[c]);
-		else if (b[c - 1].first.second < b[c].first.first)
-			curr.pb(b[c]);
-		else {
-			if (sz(curr) > sz(prev))
-				prev = curr;
-			curr.clear();
-			curr.pb(b[c]);
+	test() {
+		int n;
+		cin >> n;
+		vi a(n), dpinc(n, 1), dpdec(n, 1);
+		input(a);
+		// Longest increasing sequence
+		dpinc[0] = 1;
+		for (int c = 1; c < n; c++) {
+			for (int r = 0; r < c; r++) {
+				if (a[c] > a[r])
+					dpinc[c] = max(dpinc[r] + 1, dpinc[c]);
+				else if(a[c]<a[r])
+					dpdec[c] = max(max(dpinc[r] + 1, dpdec[r] + 1), dpdec[c]);
+			}
 		}
-	}
-	if (sz(curr) > sz(prev))
-		prev = curr;
-	res = prev;
-	curr.clear();
-	prev.clear();
-
-	for (int j = 0; j < sz(c); ++j) {
-		if (sz(curr) == 0)
-			curr.pb(c[j]);
-		else if (c[j - 1].first.second > c[j].first.first)
-			curr.pb(c[j]);
-		else {
-			if (sz(curr) > sz(prev))
-				prev = curr;
-			curr.clear();
-			curr.pb(c[j]);
-		}
-	}
-
-	if (sz(curr) > sz(prev))
-		prev = curr;
-
-	if (sz(res) < sz(prev))
-		res = prev;
-
-	cout << sz(res) << endl;
-	for (int c = 0; c < sz(res); c++) {
-		cout << res[c].second << ' ';
+		EVARS(dpdec)
+		EVARS(dpinc)
+		cout << max(*max_element(all(dpinc)), *max_element(all(dpdec)));
 	}
 }

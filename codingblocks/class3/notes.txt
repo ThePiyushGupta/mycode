@@ -1,0 +1,8 @@
+sieve of erasthatos
+bitset
+find factors of a number using sieve
+segmented sieve
+gcd 
+extended euclidean theorem
+number of coprimes less than number
+

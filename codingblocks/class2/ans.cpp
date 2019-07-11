@@ -102,65 +102,29 @@ int r, c, n, k;  //predeclared control variables for loops
 //************************************************************************************************************
 
 int main() {
+	// Use dbg build
 	dragonforce();
-	int n;
-	cin >> n;
+	int n, l, r, x;
+	cin >> n >> l >> r >> x;
+	vi a(n);
+	input(a);
+	sort(all(a));
 
-	vector<pair<pi, int>> b, c, curr, prev, res;
-	for (int j = 0; j < n; j++) {
-		int g, h;
-		cin >> g >> h;
-		// a[c]={g,h};
-		if (g > h)
-			b.push_back({{g, h}, j + 1});
-		else
-			c.push_back({{g, h}, j + 1});
-	}
-
-	sort(all(b));
-	sort(all(c));
-
-	EVARS(sz(b), sz(c));
-
-	for (int c = 0; c < sz(b); ++c) {
-		if (sz(curr) == 0)
-			curr.pb(b[c]);
-		else if (b[c - 1].first.second < b[c].first.first)
-			curr.pb(b[c]);
-		else {
-			if (sz(curr) > sz(prev))
-				prev = curr;
-			curr.clear();
-			curr.pb(b[c]);
+	int k = 1 << n;
+	int c = 0,ct=0;
+	for (c = 0; c < k; ++c) {
+		int ct = 0, sum = 0, r = c;
+		while (r) {
+			if (r % 2)
+				sum += a[ct];
+			r /= 2, ct++;
+		}
+		EVARS(sum);
+		if (sum == tsum) {
+			cout << "Yes\n";
+			break;
 		}
 	}
-	if (sz(curr) > sz(prev))
-		prev = curr;
-	res = prev;
-	curr.clear();
-	prev.clear();
-
-	for (int j = 0; j < sz(c); ++j) {
-		if (sz(curr) == 0)
-			curr.pb(c[j]);
-		else if (c[j - 1].first.second > c[j].first.first)
-			curr.pb(c[j]);
-		else {
-			if (sz(curr) > sz(prev))
-				prev = curr;
-			curr.clear();
-			curr.pb(c[j]);
-		}
-	}
-
-	if (sz(curr) > sz(prev))
-		prev = curr;
-
-	if (sz(res) < sz(prev))
-		res = prev;
-
-	cout << sz(res) << endl;
-	for (int c = 0; c < sz(res); c++) {
-		cout << res[c].second << ' ';
-	}
+	if (c == k)
+		cout << "No\n";
 }
