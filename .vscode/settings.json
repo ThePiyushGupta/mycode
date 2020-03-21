@@ -27,5 +27,6 @@
     "editor.formatOnSave": true,
     "editor.formatOnPaste": true,
     "editor.fontFamily": "'Menlo','Consolas','DejaVu Sans Mono'",
-    "editor.fontLigatures": true
+    "editor.fontLigatures": true,
+    "python.pythonPath": "/usr/bin/python"
 }

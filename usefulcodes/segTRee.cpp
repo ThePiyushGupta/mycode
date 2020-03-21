@@ -97,7 +97,6 @@ inline void __evars(vector<string>::iterator it, T a, Args... args) {
 int n;
 vector<ll> seg(N << 2);
 void build(vi &a, int beg, int end, int pos) {
-	// EVARS(beg, end, pos);
 	if (beg == end)
 		seg[pos] = max(a[beg], 0);
 	else {

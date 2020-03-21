@@ -6,7 +6,6 @@ typedef vector<int> vi;
 typedef long long ll;
 typedef unsigned long long ull;
 typedef vector<string> vs;
-typedef vector<vector<int>> vii;
 //*****************************************************************************************************
 vector<string> split(const string &s, char c) {
 	vector<string> v;
@@ -89,18 +88,84 @@ inline void __evars(vector<string>::iterator it, T a, Args... args) {
 #define grsort() [](const auto &a, const auto &b) { return a > b; }
 #define F first
 #define S second
-#define mem(a, x) memset(a, x, sizeof(a))
 #define mnv(v) *min_element(v.begin(), v.end())
 #define mxv(v) *max_element(v.begin(), v.end())
 #define pr(x) cout << fixed << setprecision(x);
-#define N 100005
-int r, c, n, k, m;  //predeclared control variables for loops
+int r, c, n, k;  //predeclared control variables for loops
+#define N 50005
 //************************************************************************************************************
+vector<vi> adj, reft;
+vi segarr, visited, mema, segtree, depth;
+
+void dfsgen(int v, int par, int &ct) {
+	depth[v] = depth[par] + 1;
+	visited[v] = segarr.size();
+	segarr.push_back(v);
+	for (auto it : adj[v])
+		if (it != par)
+			dfsgen(it, v, ct), segarr.pb(v);
+}
+
+void buildseg(int pos, int beg, int end) {
+	// EVARS(pos, beg, end);
+	if (beg == end) {
+		segtree[pos] = segarr[beg];
+	} else {
+		int mid = (beg + end) / 2;
+		buildseg((pos << 1) + 1, beg, mid), buildseg((pos << 1) + 2, mid + 1, end);
+		segtree[pos] = depth[segtree[(pos << 1) + 1]] < depth[segtree[(pos << 1) + 2]] ? segtree[(pos << 1) + 1] : segtree[(pos << 1) + 2];
+	}
+}
+
+int LCAq(int qb, int qe, int b, int e, int pos) {
+	if (b >= qb && e <= qe)
+		return segtree[pos];
+	else if (qb > e || qe < b)
+		return 0;
+	int mid = (b + e) / 2;
+	int g = LCAq(qb, qe, b, mid, (pos << 1) + 1), h = LCAq(qb, qe, mid + 1, e, (pos << 1) + 2);
+	// EVARS(g, h);
+	return depth[g] < depth[h] ? g : h;
+}
 
 int main() {
 	dragonforce();
-	int n;
-	cin >> n;
-	vi a(n);
-	input(a);
+	r = 0;
+	test() {
+		cin >> n;
+		vi &a = visited;
+		segtree = a = mema, adj = reft, adj.resize(n + 1), a.resize(n + 1), depth.resize(n + 1);
+		for (int c = 0; c < n; c++) {
+			test() {
+				cin >> k;
+				adj[c + 1].push_back(k), a[k] = true;
+			}
+		}
+		for (int c = 0; c < n; c++)
+			if (a[c + 1] == false) {
+				k = c + 1;
+				break;
+			}
+
+		fill(all(visited), false);
+		int ct = 0;
+		depth[0] = 0;
+		// EVARS(k);
+		dfsgen(k, 0, ct);
+		EVARS(segarr);
+		EVARS(visited);
+		segtree.resize(sz(segarr) << 2);
+
+		buildseg(0, 0, sz(segarr) - 1);
+		EVARS(segtree);
+		depth[0] = INT_MAX;
+		cout << "Case " << ++r << ":\n";
+		test() {
+			int g, h;
+			cin >> g >> h;
+			g = visited[g], h = visited[h];
+			EVARS(g, h);
+			cout << LCAq(min(g, h), max(g, h), 0, sz(segarr) - 1, 0) << endl;
+		}
+	}
 }

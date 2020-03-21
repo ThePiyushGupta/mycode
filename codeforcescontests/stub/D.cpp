@@ -1,115 +1,106 @@
 #include <bits/stdc++.h>
-#include <math.h>
-#include <stdio.h>
-#include <algorithm>
-#include <bitset>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
-#include <iostream>
-#include <list>
-#include <queue>
-#include <stack>
-#include <unordered_map>
-#include <vector>
-// #include "boost/algorithm/string.hpp"
-#define fio ios_base::sync_with_stdio(false)
+//*****************************************************************************************************
+using namespace std;
+typedef pair<int, int> pi;
+typedef vector<int> vi;
+typedef long long ll;
+typedef unsigned long long ull;
+typedef vector<string> vs;
+typedef vector<vector<int>> vii;
+//*****************************************************************************************************
+vector<string> split(const string &s, char c) {
+	vector<string> v;
+	stringstream ss(s);
+	string x;
+	while (getline(ss, x, c))
+		v.emplace_back(x);
+	return move(v);
+}
+template <typename T, typename... Args>
+inline string arrStr(T arr, int n) {
+	stringstream s;
+	s << "[";
+	for (int i = 0; i < n - 1; i++)
+		s << arr[i] << ",";
+	s << arr[n - 1] << "]";
+	return s.str();
+}
+
+#if !defined(ONLINE_JUDGE)
+#define EVARS(args...)       \
+	__evars_begin(__LINE__); \
+	__evars(split(#args, ',').begin(), args);
+#else
+#define EVARS(args...)
+#endif  // DEBUG
+inline void __evars_begin(int line) {
+	cerr << "#" << line << ": ";
+}
+template <typename T>
+inline void __evars_out_var(vector<T> val) { cerr << arrStr(val, val.size()); }
+template <typename T>
+inline void __evars_out_var(T *val) { cerr << arrStr(val, 10); }
+template <typename T>
+inline void __evars_out_var(T val) { cerr << val; }
+inline void __evars(vector<string>::iterator it) { cerr << endl; }
+
+template <typename T, typename... Args>
+inline void __evars(vector<string>::iterator it, T a, Args... args) {
+	cerr << it->substr((*it)[0] == ' ', it->length()) << "=";
+	__evars_out_var(a);
+	cerr << "; ";
+	__evars(++it, args...);
+}
+//*****************************************************************************************************
+#define debug(x)                          \
+	{                                     \
+		cerr << #x << " = " << x << endl; \
+	}
 #define mod 1000000007
-#define mod1 mod
-#define mod2 1000000007
-#define li long long int
-#define ll li
-#pragma comment(linker, "/stack:200000000")
-#pragma GCC optimize("Ofast")
-#pragma GCC target("sse,sse2,sse3,ssse3,sse4,popcnt,abm,mmx,avx,tune=native")
-#define readi(x) scanf("%d", &x)
-#define reads(x) scanf("%s", x)
-#define readl(x) scanf("%I64d", &x)
-#define rep(i, n) for (i = 0; i < n; i++)
-#define revp(i, n) for (i = (n - 1); i >= 0; i--)
-#define myrep1(i, a, b) for (i = a; i <= b; i++)
-#define myrep2(i, a, b) for (i = b; i >= a; i--)
+#define MAX 20000000
+#define test()   \
+	long long o; \
+	cin >> o;    \
+	while (o--)
+#define input(vec) for (unsigned int c = 0; c<vec.size(); cin>> vec[c++])
+#define output(vec, x)                                                 \
+	{                                                                  \
+		for (unsigned int c = 0; c < vec.size(); x << vec[c++] << ' ') \
+			;                                                          \
+		x << endl;                                                     \
+	}
+#define sz(k) k.size()
+#define ln(s) s.length()
 #define pb push_back
 #define mp make_pair
-#define fi first
-#define sec second
-#define MAXN 1000000000000000005
-#define MINN -10000000000000000
-#define INTMAX 1000001000
-#define pii pair<ll, ll>
-#define pdd pair<double, double>
-#define pic pair<int, char>
-#define N 2000005
-#define lgn 20
-#define ddouble long double
-#define minus minu
-#define PI 3.1415926535
-#define lgn 20
+#define all(x) x.begin(), x.end()
+#define finc(i, x, y) for (__typeof(x) i = x; i < y; i++)
+#define fdec(i, x, y) for (__typeof(x) i = x; i > y; i--)
+#define fincp(itr, x) for (__typeof(x.begin()) itr = x.begin(); itr != x.end(); itr++)
+#define fdecp(itr, x) for (auto itr = x.end() - 1; itr != x.begin() - 1; itr--)
+#define dragonforce()                 \
+	ios_base::sync_with_stdio(false); \
+	cin.tie(NULL);                    \
+	cout.tie(NULL);                   \
+	cerr.tie(NULL);
+#define PI (acos(-1.0))
+#define E 2.71828182845904523536
+#define by(x) [](const auto &a, const auto &b) { return a.x < b.x; }
+#define grsort() [](const auto &a, const auto &b) { return a > b; }
+#define F first
+#define S second
+#define mem(a, x) memset(a, x, sizeof(a))
+#define mnv(v) *min_element(v.begin(), v.end())
+#define mxv(v) *max_element(v.begin(), v.end())
+#define pr(x) cout << fixed << setprecision(x);
+#define N 100005
+int r, c, n, k, m;  //predeclared control variables for loops
+//************************************************************************************************************
 
-// #define INTMAX 200000000
-
-// using namespace boost;
-// #define si short int
-
-using namespace std;
-using namespace __gnu_pbds;
-typedef priority_queue<ll, vector<ll> > max_pq;
-typedef priority_queue<pii, vector<pii>, greater<pii> > min_pq;
-ll toint(const string& s) {
-	stringstream ss;
-	ss << s;
-	ll x;
-	ss >> x;
-	return x;
-}
-string tostring(ll number) {
-	stringstream ss;
-	ss << number;
-	return ss.str();
-}
-
-// using namespace __gnu_pbds;
-// typedef priority_queue<pair<ll,char> , vector<pair<ll , char> > > max_pq;
-// typedef priority_queue<pii , vector<pii > ,greater<pii > > min_pq;
-typedef tree<pii, null_type, less<pii>, rb_tree_tag, tree_order_statistics_node_update> OST;
-// typedef priority_queue<pair < ll , pair < pii , ll > >  , vector<pair < ll , pair < pii , ll > >  > ,greater<pair < ll , pair < pii , ll > >  > > min_pq;
-#define TRACE
-#ifdef TRACE
-#define trace(...) __f(#__VA_ARGS__, __VA_ARGS__)
-template <typename Arg1>
-void __f(const char* name, Arg1&& arg1) {
-	cout << name << " : " << arg1 << std::endl;
-	//use cerr if u want to display at the bottom
-}
-template <typename Arg1, typename... Args>
-void __f(const char* names, Arg1&& arg1, Args&&... args) {
-	const char* comma = strchr(names + 1, ',');
-	cout.write(names, comma - names) << " : " << arg1 << " | ";
-	__f(comma + 1, args...);
-}
-#else
-#define trace(...)
-#endif
-#define nn 2000005
-ll dp[100][100];
-ll col[100][100];
-ll ar[200];
-ll n;
 int main() {
-	while (cin >> n) {
-		for (ll i = 1; i <= n; i++)
-			cin >> ar[i], col[i][i] = ar[i];
-		
-		for (ll i = 2; i <= n; i++) {
-			ll r = 1, c = i;
-			while (c <= n) {
-				ll val = INT_MAX;
-				for (ll k = r; k <= c - 1; k++)
-					val = min(val, dp[r][k] + dp[k + 1][c] + col[r][k] * col[k + 1][c]);
-				dp[r][c] = val;
-				col[r][c] = (col[r][r] + col[r + 1][c]) % 100;
-				r++, c++;
-			}
-		}
-		cout << dp[1][n] << "\n";
-	}
+	dragonforce();
+	int n;
+	cin>>n;
+	vi a(n);
+	input(a);
 }

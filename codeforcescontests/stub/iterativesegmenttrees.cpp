@@ -6,51 +6,6 @@ typedef vector<int> vi;
 typedef long long ll;
 typedef unsigned long long ull;
 typedef vector<string> vs;
-typedef vector<vector<int>> vii;
-//*****************************************************************************************************
-vector<string> split(const string &s, char c) {
-	vector<string> v;
-	stringstream ss(s);
-	string x;
-	while (getline(ss, x, c))
-		v.emplace_back(x);
-	return move(v);
-}
-template <typename T, typename... Args>
-inline string arrStr(T arr, int n) {
-	stringstream s;
-	s << "[";
-	for (int i = 0; i < n - 1; i++)
-		s << arr[i] << ",";
-	s << arr[n - 1] << "]";
-	return s.str();
-}
-
-#if !defined(ONLINE_JUDGE)
-#define EVARS(args...)       \
-	__evars_begin(__LINE__); \
-	__evars(split(#args, ',').begin(), args);
-#else
-#define EVARS(args...)
-#endif  // DEBUG
-inline void __evars_begin(int line) {
-	cerr << "#" << line << ": ";
-}
-template <typename T>
-inline void __evars_out_var(vector<T> val) { cerr << arrStr(val, val.size()); }
-template <typename T>
-inline void __evars_out_var(T *val) { cerr << arrStr(val, 10); }
-template <typename T>
-inline void __evars_out_var(T val) { cerr << val; }
-inline void __evars(vector<string>::iterator it) { cerr << endl; }
-
-template <typename T, typename... Args>
-inline void __evars(vector<string>::iterator it, T a, Args... args) {
-	cerr << it->substr((*it)[0] == ' ', it->length()) << "=";
-	__evars_out_var(a);
-	cerr << "; ";
-	__evars(++it, args...);
-}
 //*****************************************************************************************************
 #define debug(x)                          \
 	{                                     \
@@ -89,18 +44,79 @@ inline void __evars(vector<string>::iterator it, T a, Args... args) {
 #define grsort() [](const auto &a, const auto &b) { return a > b; }
 #define F first
 #define S second
-#define mem(a, x) memset(a, x, sizeof(a))
 #define mnv(v) *min_element(v.begin(), v.end())
 #define mxv(v) *max_element(v.begin(), v.end())
 #define pr(x) cout << fixed << setprecision(x);
-#define N 100005
-int r, c, n, k, m;  //predeclared control variables for loops
+int r, c, n, k;  //predeclared control variables for loops
+#define N 50005
 //************************************************************************************************************
+//                                                GSS1 Spoj
+// ************************************************************************************************************
+struct nodeseg {
+	int val, lmax, rmax, sum;
+
+	void fill(int k) {
+		sum = lmax = rmax = val = k;
+	}
+
+	void merge(nodeseg a, nodeseg b) {
+		lmax = max(a.lmax, a.sum + b.lmax);
+		rmax = max(b.rmax, b.sum + a.rmax);
+		sum = a.sum + b.sum;
+		val = max(max(lmax, rmax), max(a.val, b.val));
+		val = max(val, a.rmax + b.lmax);
+	}
+};
+nodeseg refs, segtree[N << 1];
+// vector<nodeseg> segtree;
+void build() {
+	for (int c = n - 1; c > 0; c--) {
+		segtree[c].merge(segtree[c << 1], segtree[((c << 1) | 1)]);
+	}
+}
+
+int querys(int l, int r) {
+	nodeseg lft, rght;
+	lft = rght = refs;
+	for (l += n, r += n; l < r; l >>= 1, r >>= 1) {
+		if (l & 1) lft.merge(lft, segtree[l++]);
+		if (r & 1) rght.merge(segtree[--r], rght);
+	}
+	lft.merge(lft, rght);
+	return lft.val;
+}
+
+void modify(int pos, int val) {
+	segtree[pos += n].fill(val);
+	while (pos >>= 1)
+		segtree[pos].merge(segtree[pos << 1], segtree[(pos << 1) + 1]);
+}
+
+class asdf{
+	public:
+		const int k;
+		asdf(int z): k(z)
+		{
+
+		}
+};
 
 int main() {
 	dragonforce();
-	int n;
-	cin >> n;
-	vi a(n);
-	input(a);
+	cin >> n >> k;
+	vector<int> a(k + 1);
+	for (int c = 0; c < n; c++) {
+		cin >> r;
+		a[r]++;
+	}
+	k = n;
+	int res = 0, left = 0;
+	for (int c = 0; c < n; c++) {
+		res += (a[c] / 2) * 2;
+		a[c] %= 2;
+		if (a[c]) left++;
+	}
+
+	res += (left + 1) / 2;
+	cout << res;
 }

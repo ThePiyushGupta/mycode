@@ -6,6 +6,7 @@ typedef vector<int> vi;
 typedef long long ll;
 typedef unsigned long long ull;
 typedef vector<string> vs;
+typedef vector<vector<int>> vii;
 //*****************************************************************************************************
 vector<string> split(const string &s, char c) {
 	vector<string> v;
@@ -88,31 +89,28 @@ inline void __evars(vector<string>::iterator it, T a, Args... args) {
 #define grsort() [](const auto &a, const auto &b) { return a > b; }
 #define F first
 #define S second
+#define mem(a, x) memset(a, x, sizeof(a))
 #define mnv(v) *min_element(v.begin(), v.end())
 #define mxv(v) *max_element(v.begin(), v.end())
 #define pr(x) cout << fixed << setprecision(x);
-int r, c, n, k;  //predeclared control variables for loops
 #define N 100005
+int r, c, n, k, m;  //predeclared control variables for loops
 //************************************************************************************************************
-int solve(string s){
-	n=sz(s);
-	string sorts = s;
-	sort(all(sorts));
-	vector <int> fact(15);
-	fact[0]= 1;
-	for(int c = 1; c < 15; c++){
-		fact[c] = (fact[c - 1] * c) % 1000003;
-	}
-	for(int r = 0; r < n; r++){
-		// for each position find the number of permutations
-		
-	}
-
-}
 
 int main() {
-	int n;
-	string s;
-	cin>>s;
-	solve(s);
+	dragonforce();
+	test() {
+		int n;
+		cin >> n;
+		if (n < 2)
+			cout << -1 << endl;
+		else {
+			cout << 2;
+			bool t = false;
+			for (int c = 0; c < n - 1; c++) {
+				cout << 3;
+			}
+			cout << endl;
+		}
+	}
 }

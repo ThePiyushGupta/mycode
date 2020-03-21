@@ -4,7 +4,7 @@
         {
             "label": "defbuild",
             "type": "shell",
-            "command": "make name=${fileBasenameNoExtension} -f /home/piyush/Desktop/competitveCoding/Makefile",
+            "command": "/usr/bin/time -f \"\n[%e seconds][%M Kb]\" make name=${fileBasenameNoExtension} -f /home/piyush/Desktop/competitveCoding/Makefile",
             "options": {
                 "cwd": "${fileDirname}"
             },
@@ -13,7 +13,7 @@
                 "isDefault": true
             },
             "presentation": {
-                "echo": false,
+                "echo": true,
                 "reveal": "never",
                 "focus": true,
                 "panel": "shared"
@@ -38,7 +38,7 @@
         {
             "label": "dbgbuild",
             "type": "shell",
-            "command": "make name=${fileBasenameNoExtension} str=ha -f /home/piyush/Desktop/competitveCoding/Makefile",
+            "command": "/usr/bin/time -f \"\n[%e seconds][%M Kb]\" make name=${fileBasenameNoExtension} str=ha -f /home/piyush/Desktop/competitveCoding/Makefile",
             "options": {
                 "cwd": "${fileDirname}"
             },
