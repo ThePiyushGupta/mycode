@@ -12,10 +12,9 @@ input.txt
 
 #my_output files
 my_output*
-output*
 
-#input files
-input*
+# ipch files
+.vscode/ipch/*
 
 #test.sh
 test.sh
