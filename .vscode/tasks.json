@@ -4,7 +4,7 @@
         {
             "label": "defbuild",
             "type": "shell",
-            "command": "/usr/bin/time -f \"\n[%e seconds][%M Kb]\" make name=${fileBasenameNoExtension} -f /home/piyush/Desktop/competitveCoding/Makefile",
+            "command": "/usr/bin/time -f \"\n[%e seconds][%M Kb]\" make name=${fileBasenameNoExtension} wsf=${workspaceFolder} -f ${workspaceFolder}/Makefile",
             "options": {
                 "cwd": "${fileDirname}"
             },
@@ -38,7 +38,7 @@
         {
             "label": "dbgbuild",
             "type": "shell",
-            "command": "/usr/bin/time -f \"\n[%e seconds][%M Kb]\" make name=${fileBasenameNoExtension} str=ha -f /home/piyush/Desktop/competitveCoding/Makefile",
+            "command": "/usr/bin/time -f \"\n[%e seconds][%M Kb]\" make name=${fileBasenameNoExtension} wsf=${workspaceFolder} str=ha -f ${workspaceFolder}/Makefile",
             "options": {
                 "cwd": "${fileDirname}"
             },

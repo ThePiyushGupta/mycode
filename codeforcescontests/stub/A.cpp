@@ -32,7 +32,7 @@ inline string arrStr(T arr, int n) {
 	__evars(split(#args, ',').begin(), args);
 #else
 #define EVARS(args...)
-#endif  // DEBUG
+#endif	// DEBUG
 inline void __evars_begin(int line) {
 	cerr << "#" << line << ": ";
 }
@@ -94,23 +94,31 @@ inline void __evars(vector<string>::iterator it, T a, Args... args) {
 #define mxv(v) *max_element(v.begin(), v.end())
 #define pr(x) cout << fixed << setprecision(x);
 #define N 100005
-int r, c, n, k, m;  //predeclared control variables for loops
+int r, c, n, k, m;	//predeclared control variables for loops
 //************************************************************************************************************
+int solve() {
+	int x, n, m;
+	cin >> x >> n >> m;
+	while (x > 20 && n) {
+		x = x / 2 + 10;
+		n--;
+	}
+
+	while (x > 0 && m) {
+		m--;
+		x -= 10;
+	}
+	EVARS(x, n, m);
+	if (x > 0)
+		cout << "NO" << endl;
+	else
+		cout << "YES" << endl;
+	return 0;
+}
 
 int main() {
 	dragonforce();
 	test() {
-		int n;
-		cin >> n;
-		if (n < 2)
-			cout << -1 << endl;
-		else {
-			cout << 2;
-			bool t = false;
-			for (int c = 0; c < n - 1; c++) {
-				cout << 3;
-			}
-			cout << endl;
-		}
+		solve();
 	}
 }

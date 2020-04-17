@@ -32,7 +32,7 @@ inline string arrStr(T arr, int n) {
 	__evars(split(#args, ',').begin(), args);
 #else
 #define EVARS(args...)
-#endif  // DEBUG
+#endif	// DEBUG
 inline void __evars_begin(int line) {
 	cerr << "#" << line << ": ";
 }
@@ -94,13 +94,108 @@ inline void __evars(vector<string>::iterator it, T a, Args... args) {
 #define mxv(v) *max_element(v.begin(), v.end())
 #define pr(x) cout << fixed << setprecision(x);
 #define N 100005
-int r, c, n, k, m;  //predeclared control variables for loops
+int r, c, n, k, m;	//predeclared control variables for loops
 //************************************************************************************************************
+class graphNode {
+public:
+	// data
+	vi adj, wt;
+	int dist;
+	graphNode() {
+		dist = 0;
+	}
+};
 
+class graph {
+public:
+	// data values
+	int n;
+	vector<graphNode> nd;
+	vector<vi> dist;
+	// multiset<pi, greater<pi>> s;
+	multiset<int, greater<int>> s;
+	// functions
+	graph(int nodeNumber) {
+		n = nodeNumber + 1;
+		nd.resize(n);
+		// dist.resize(n, vi(n, INT_MAX / 2));
+	}
+
+	void addEdge(int a, int b, bool weighted = false, int weight = 0) {
+		nd[a].adj.pb(b);
+		nd[b].adj.pb(a);
+		if (weighted) {
+			dist[a][b] = dist[b][a] = weight;
+			nd[a].wt.pb(weight);
+			nd[b].wt.pb(weight);
+		}
+	}
+
+	void filldist(int itr, int par, int val) {
+		nd[itr].dist = val;
+		for (auto it : nd[itr].adj) {
+			if (it == par) continue;
+			filldist(it, itr, val + 1);
+		}
+	}
+
+	int fillbeh(int itr, int par) {
+		// nd[itr].dist = val;
+		// EVARS(adj[itr]);
+		int beh = 0;
+		for (auto it : nd[itr].adj) {
+			if (it == par) continue;
+			beh += fillbeh(it, itr);
+		}
+		// s.insert({val, itr});
+		// nd[itr].beh = beh;
+		// EVARS(itr, par);
+		s.insert(nd[itr].dist - beh);
+		return beh + 1;
+	}
+
+	void solve(int kw) {
+		// EVARS(k);
+		filldist(1, 0, 0);
+		// EVARS(k);
+
+		fillbeh(1, 0);
+		EVARS(s.size());
+
+		// for (auto it : nd) {
+		// 	EVARS(it.dist, it.beh);
+		// }
+
+		ll res = 0;
+		while (kw--) {
+			// EVARS(res, kw);
+
+			auto k = *s.begin();
+			// EVARS(res, kw);
+
+			s.erase(s.begin());
+			// EVARS(res, kw);
+			res += k;
+
+			// ll val = k.F;
+			// ll beh = n + 10 - k.S;
+			// res += val * (beh + 1) - beh;
+			// EVARS(res, kw);
+		}
+		cout << res << endl;
+	}
+};
 int main() {
 	dragonforce();
 	int n;
-	cin>>n;
-	vi a(n);
-	input(a);
+	cin >> n >> k;
+	graph myg(n);
+
+	for (int c = 0; c < n - 1; ++c) {
+		int g, h;
+		cin >> g >> h;
+		myg.addEdge(g, h);
+	}
+
+	myg.solve(k);
 }

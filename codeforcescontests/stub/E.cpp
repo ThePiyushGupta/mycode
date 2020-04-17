@@ -32,7 +32,7 @@ inline string arrStr(T arr, int n) {
 	__evars(split(#args, ',').begin(), args);
 #else
 #define EVARS(args...)
-#endif  // DEBUG
+#endif	// DEBUG
 inline void __evars_begin(int line) {
 	cerr << "#" << line << ": ";
 }
@@ -94,7 +94,7 @@ inline void __evars(vector<string>::iterator it, T a, Args... args) {
 #define mxv(v) *max_element(v.begin(), v.end())
 #define pr(x) cout << fixed << setprecision(x);
 #define N 100005
-int r, c, n, k, m;  //predeclared control variables for loops
+int r, c, n, k, m;	//predeclared control variables for loops
 //************************************************************************************************************
 
 int main() {

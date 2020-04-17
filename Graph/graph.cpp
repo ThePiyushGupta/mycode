@@ -24,7 +24,6 @@ public:
 	graph(int nodeNumber) {
 		n = nodeNumber + 1;
 		nd.resize(n);
-		dist.resize(n, vi(n, INT_MAX / 2));
 	}
 
 	void addEdge(int a, int b, bool weighted = false, int weight = 0) {

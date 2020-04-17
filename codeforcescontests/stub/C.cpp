@@ -32,7 +32,7 @@ inline string arrStr(T arr, int n) {
 	__evars(split(#args, ',').begin(), args);
 #else
 #define EVARS(args...)
-#endif  // DEBUG
+#endif	// DEBUG
 inline void __evars_begin(int line) {
 	cerr << "#" << line << ": ";
 }
@@ -94,95 +94,101 @@ inline void __evars(vector<string>::iterator it, T a, Args... args) {
 #define mxv(v) *max_element(v.begin(), v.end())
 #define pr(x) cout << fixed << setprecision(x);
 #define N 100005
-int r, c, n, k, m;  //predeclared control variables for loops
+int r, c, n, k, m;	//predeclared control variables for loops
 //************************************************************************************************************
+int solve() {
+	int n;
+	vi a(3);
+	input(a);
 
-// int P[SIZE * 2];
+	// multiset<pi> ms;
+	vector<pi> idk;
 
-// Transform S into new string with special characters inserted.
-string convertToNewString(const string &s) {
-	string newString = "@";
-
-	for (int i = 0; i < s.size(); i++) {
-		newString += "#" + s.substr(i, 1);
-	}
-
-	newString += "#$";
-	return newString;
-}
-
-string longestPalindromeSubstring(const string &s) {
-	string Q = convertToNewString(s);
-	int c = 0, r = 0;  // current center, right limit
-	vi P(Q.size() + 10);
-	// EVARS(Q);
-
-	for (int i = 1; i < Q.size() - 1; i++) {
-		// find the corresponding letter in the palidrome subString
-		int iMirror = c - (i - c);
-
-		if (r > i) {
-			P[i] = min(r - i, P[iMirror]);
-		}
-
-		// expanding around center i
-		while (Q[i + 1 + P[i]] == Q[i - 1 - P[i]]) {
-			P[i]++;
-		}
-
-		// Update c,r in case if the palindrome centered at i expands past r,
-		if (i + P[i] > r) {
-			c = i;  // next center = i
-			r = i + P[i];
+	for (int r = 0; r < 3; r++) {
+		for (int c = 0; c < a[r]; c++) {
+			cin >> k;
+			idk.push_back({k, r});
 		}
 	}
 
-	// Find the longest palindrome length in p.
+	sort(all(idk));
 
-	int maxPalindrome = 0;
-	int centerIndex = 0;
-	// EVARS(P, s);
+	vector<vector<ll>> b(3);
+	for (auto it : idk) {
+		if (!sz(b[it.S]))
+			b[it.S].pb(it.F);
+		else if (b[it.S].back() != it.F)
+			b[it.S].pb(it.F);
+	}
+	EVARS(b[0], b[1], b[2]);
 
-	for (int i = 1; i < Q.size() - 1; i++) {
-		// &&(centerIndex - maxPalindrome == 1 || max)
-		if (P[i] > maxPalindrome && (i - P[i] - 1) / 2 == 0) {
-			maxPalindrome = P[i];
-			centerIndex = i;
+	ll res = LLONG_MAX;
+	for (auto it : b[0]) {
+		int g = lower_bound(b[1].begin(), b[1].end(), it) - b[1].begin() - 1;
+		// int gm = upper_bound(b[1].begin(), b[1].end(), it) - b[1].begin();
+		int h = lower_bound(b[2].begin(), b[2].end(), it) - b[2].begin() - 1;
+		// int hm = upper_bound(b[2].begin(), b[2].end(), it) - b[2].begin();
+
+		if (g < 0) g++;
+		if (h < 0) h++;
+		EVARS(g, h, it);
+		for (int r = g; r < g + 2 && r < b[1].size(); r++) {
+			for (int c = h; c < h + 2 && c < b[2].size(); c++) {
+				ll k = (it - b[1][r]) * (it - b[1][r]) +
+					   (it - b[2][c]) * (it - b[2][c]) +
+					   (b[2][c] - b[1][r]) * (b[2][c] - b[1][r]);
+				res = min(res, k);
+			}
+		}
+	}
+	swap(b[0], b[1]);
+	for (auto it : b[0]) {
+		int g = lower_bound(b[1].begin(), b[1].end(), it) - b[1].begin() - 1;
+		// int gm = upper_bound(b[1].begin(), b[1].end(), it) - b[1].begin();
+		int h = lower_bound(b[2].begin(), b[2].end(), it) - b[2].begin() - 1;
+		// int hm = upper_bound(b[2].begin(), b[2].end(), it) - b[2].begin();
+
+		if (g < 0) g++;
+		if (h < 0) h++;
+		EVARS(g, h, it);
+		for (int r = g; r < g + 2 && r < b[1].size(); r++) {
+			for (int c = h; c < h + 2 && c < b[2].size(); c++) {
+				ll k = (it - b[1][r]) * (it - b[1][r]) +
+					   (it - b[2][c]) * (it - b[2][c]) +
+					   (b[2][c] - b[1][r]) * (b[2][c] - b[1][r]);
+				res = min(res, k);
+			}
 		}
 	}
 
-	// cout << maxPalindrome << "\n";
-	return s.substr((centerIndex - 1 - maxPalindrome) / 2, maxPalindrome);
+	swap(b[0], b[2]);
+	for (auto it : b[0]) {
+		int g = lower_bound(b[1].begin(), b[1].end(), it) - b[1].begin() - 1;
+		// int gm = upper_bound(b[1].begin(), b[1].end(), it) - b[1].begin();
+		int h = lower_bound(b[2].begin(), b[2].end(), it) - b[2].begin() - 1;
+		// int hm = upper_bound(b[2].begin(), b[2].end(), it) - b[2].begin();
+
+		if (g < 0) g++;
+		if (h < 0) h++;
+		EVARS(g, h, it);
+		for (int r = g; r < g + 2 && r < b[1].size(); r++) {
+			for (int c = h; c < h + 2 && c < b[2].size(); c++) {
+				ll k = (it - b[1][r]) * (it - b[1][r]) +
+					   (it - b[2][c]) * (it - b[2][c]) +
+					   (b[2][c] - b[1][r]) * (b[2][c] - b[1][r]);
+				res = min(res, k);
+			}
+		}
+	}
+
+	cout << res << endl;
+	EVARS(res);
+	return 0;
 }
 
 int main() {
 	dragonforce();
 	test() {
-		string s, pre, suf, temp, res;
-		cin >> s;
-		n = sz(s);
-		int ct = 0;
-		while (ct < n / 2) {
-			if (s[ct] == s[n - ct - 1]) {
-				pre += s[ct];
-			} else
-				break;
-			ct++;
-		}
-		suf = pre;
-		reverse(all(suf));
-		temp = s.substr(ct, n - 2 * ct);
-		// EVARS(temp, pre, suf, longestPalindromeSubstring(temp));
-		string pretemp = longestPalindromeSubstring(temp), suftemp = temp;
-		reverse(all(suftemp));
-		suftemp = longestPalindromeSubstring(suftemp);
-		reverse(all(suftemp));
-		EVARS(temp, pre, suf, pretemp, suftemp);
-
-		if (ln(pretemp) > ln(suftemp)) {
-			res = pre + pretemp + suf;
-		} else
-			res = pre + suftemp + suf;
-		cout << res << endl;
+		solve();
 	}
 }

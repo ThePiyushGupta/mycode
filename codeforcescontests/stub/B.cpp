@@ -32,7 +32,7 @@ inline string arrStr(T arr, int n) {
 	__evars(split(#args, ',').begin(), args);
 #else
 #define EVARS(args...)
-#endif  // DEBUG
+#endif	// DEBUG
 inline void __evars_begin(int line) {
 	cerr << "#" << line << ": ";
 }
@@ -56,7 +56,7 @@ inline void __evars(vector<string>::iterator it, T a, Args... args) {
 	{                                     \
 		cerr << #x << " = " << x << endl; \
 	}
-#define mod 1000000007
+#define mod 998244353
 #define MAX 20000000
 #define test()   \
 	long long o; \
@@ -94,31 +94,106 @@ inline void __evars(vector<string>::iterator it, T a, Args... args) {
 #define mxv(v) *max_element(v.begin(), v.end())
 #define pr(x) cout << fixed << setprecision(x);
 #define N 100005
-int r, c, n, k, m;  //predeclared control variables for loops
+int r, c, n, k, m;	//predeclared control variables for loops
 //************************************************************************************************************
+inline ll solve(int n, int ls, set<pi> &s) {
+	EVARS(n, ls);
+	int rst = 0, lst = ls, rs = n - ls;
+	while (lst + rst <= n) {
+		s.insert({lst++, rst++});
+	}
+	rst = rs, lst = 0;
+	while (lst + rst <= n) {
+		s.insert({lst++, rst++});
+	}
+	return 0;
+}
 
+int power(int x, int y, int p) {
+	int res = 1;  // Initialize result
+
+	x = x % p;	// Update x if it is more than or
+				// equal to p
+
+	while (y > 0) {
+		// If y is odd, multiply x with result
+		if (y & 1)
+			res = (res * x) % p;
+
+		// y must be even now
+		y = y >> 1;	 // y = y/2
+		x = (x * x) % p;
+	}
+	return res;
+}
+
+// Returns n^(-1) mod p
+int modInverse(int n, int p) {
+	return power(n, p - 2, p);
+}
+
+// Returns nCr % p using Fermat's little
+// theorem.
+int nCrModPFermat(int n, int r, int p) {
+	// Base case
+	if (r == 0)
+		return 1;
+
+	// Fill factorial array so that we
+	// can find all factorial of r, n
+	// and n-r
+	int fac[n + 1];
+	fac[0] = 1;
+	for (int i = 1; i <= n; i++)
+		fac[i] = fac[i - 1] * i % p;
+
+	return (fac[n] * modInverse(fac[r], p) % p *
+			modInverse(fac[n - r], p) % p) %
+		   p;
+}
+int nCrModp(int n, int r, int p) {
+	// Optimization for the cases when r is large
+	if (r > n - r)
+		r = n - r;
+
+	// The array C is going to store last row of
+	// pascal triangle at the end. And last entry
+	// of last row is nCr
+	int C[r + 1];
+	memset(C, 0, sizeof(C));
+
+	C[0] = 1;  // Top row of Pascal Triangle
+
+	// One by constructs remaining rows of Pascal
+	// Triangle from top to bottom
+	for (int i = 1; i <= n; i++) {
+		// Fill entries of current row using previous
+		// row values
+		for (int j = min(i, r); j > 0; j--)
+
+			// nCj = (n-1)Cj + (n-1)C(j-1);
+			C[j] = (C[j] + C[j - 1]) % p;
+	}
+	return C[r];
+}
 int main() {
 	dragonforce();
-	int n, k;
-	cin >> n >> k;
-	vi a(n);
-	input(a);
-
-	k = n - k;
-	ll res = 1, cur = INT_MIN, idk = 998244353, val = 0;
-	EVARS(k);
-	for (int c = 0; c < n; c++) {
-		EVARS(val, res);
-		if (a[c] > k) {
-			if (cur > 0) {
-				res *= (cur + 1);
-				res %= idk;
-			}
-			cur = 0;
-			val += a[c];
-		} else {
-			cur++;
-		}
+	string s, t;
+	cin >> s >> t;
+	ll res = 0;
+	set<pi> st;
+	for (int c = 1; c <= s.size(); ++c) {
+		s = s.substr(1, n - 1) + s[0];
+		EVARS(s);
+		if (s.substr(0, t.size()) != t) continue;
+		solve(s.size(), c, st);
 	}
-	cout << val << ' ' << res << endl;
+
+	for (auto it : st) {
+		EVARS(it.F, it.S, res)
+		res += nCrModp(it.S + it.F, it.S, 998244353);
+		res %= mod;
+		// EVARS(res);
+	}
+	cout << res << endl;
 }
