@@ -97,22 +97,12 @@ inline void __evars(vector<string>::iterator it, T a, Args... args) {
 int r, c, n, k, m;	//predeclared control variables for loops
 //************************************************************************************************************
 int solve() {
-	int x, n, m;
-	cin >> x >> n >> m;
-	while (x > 20 && n) {
-		x = x / 2 + 10;
-		n--;
-	}
+	int n;
+	cin>>n ;
+	vi a(n);
+	input(a);
 
-	while (x > 0 && m) {
-		m--;
-		x -= 10;
-	}
-	EVARS(x, n, m);
-	if (x > 0)
-		cout << "NO" << endl;
-	else
-		cout << "YES" << endl;
+	
 	return 0;
 }
 
