@@ -62,13 +62,17 @@ inline void __evars(vector<string>::iterator it, T a, Args... args) {
 	long long o; \
 	cin >> o;    \
 	while (o--)
-#define input(vec) for (unsigned int c = 0; c<vec.size(); cin>> vec[c++])
 #define output(vec, x)                                                 \
 	{                                                                  \
 		for (unsigned int c = 0; c < vec.size(); x << vec[c++] << ' ') \
 			;                                                          \
 		x << endl;                                                     \
 	}
+#define input(vec)                                              \
+	for (unsigned int dfadf = 0; dfadf < vec.size(); dfadf++) { \
+		cin >> vec[dfadf];                                      \
+	}
+
 #define sz(k) k.size()
 #define ln(s) s.length()
 #define pb push_back
@@ -96,99 +100,33 @@ inline void __evars(vector<string>::iterator it, T a, Args... args) {
 #define N 100005
 int r, c, n, k, m;	//predeclared control variables for loops
 //************************************************************************************************************
-int solve() {
-	int n;
-	vi a(3);
-	input(a);
-
-	// multiset<pi> ms;
-	vector<pi> idk;
-
-	for (int r = 0; r < 3; r++) {
-		for (int c = 0; c < a[r]; c++) {
-			cin >> k;
-			idk.push_back({k, r});
-		}
+class Cube {
+public:
+	int x;
+	void setSize(int a) {
+		x = a;
 	}
-
-	sort(all(idk));
-
-	vector<vector<ll>> b(3);
-	for (auto it : idk) {
-		if (!sz(b[it.S]))
-			b[it.S].pb(it.F);
-		else if (b[it.S].back() != it.F)
-			b[it.S].pb(it.F);
+	int getVolume() {
+		return x;
 	}
-	EVARS(b[0], b[1], b[2]);
-
-	ll res = LLONG_MAX;
-	for (auto it : b[0]) {
-		int g = lower_bound(b[1].begin(), b[1].end(), it) - b[1].begin() - 1;
-		// int gm = upper_bound(b[1].begin(), b[1].end(), it) - b[1].begin();
-		int h = lower_bound(b[2].begin(), b[2].end(), it) - b[2].begin() - 1;
-		// int hm = upper_bound(b[2].begin(), b[2].end(), it) - b[2].begin();
-
-		if (g < 0) g++;
-		if (h < 0) h++;
-		EVARS(g, h, it);
-		for (int r = g; r < g + 2 && r < b[1].size(); r++) {
-			for (int c = h; c < h + 2 && c < b[2].size(); c++) {
-				ll k = (it - b[1][r]) * (it - b[1][r]) +
-					   (it - b[2][c]) * (it - b[2][c]) +
-					   (b[2][c] - b[1][r]) * (b[2][c] - b[1][r]);
-				res = min(res, k);
-			}
-		}
-	}
-	swap(b[0], b[1]);
-	for (auto it : b[0]) {
-		int g = lower_bound(b[1].begin(), b[1].end(), it) - b[1].begin() - 1;
-		// int gm = upper_bound(b[1].begin(), b[1].end(), it) - b[1].begin();
-		int h = lower_bound(b[2].begin(), b[2].end(), it) - b[2].begin() - 1;
-		// int hm = upper_bound(b[2].begin(), b[2].end(), it) - b[2].begin();
-
-		if (g < 0) g++;
-		if (h < 0) h++;
-		EVARS(g, h, it);
-		for (int r = g; r < g + 2 && r < b[1].size(); r++) {
-			for (int c = h; c < h + 2 && c < b[2].size(); c++) {
-				ll k = (it - b[1][r]) * (it - b[1][r]) +
-					   (it - b[2][c]) * (it - b[2][c]) +
-					   (b[2][c] - b[1][r]) * (b[2][c] - b[1][r]);
-				res = min(res, k);
-			}
-		}
-	}
-
-	swap(b[0], b[2]);
-	for (auto it : b[0]) {
-		int g = lower_bound(b[1].begin(), b[1].end(), it) - b[1].begin() - 1;
-		// int gm = upper_bound(b[1].begin(), b[1].end(), it) - b[1].begin();
-		int h = lower_bound(b[2].begin(), b[2].end(), it) - b[2].begin() - 1;
-		// int hm = upper_bound(b[2].begin(), b[2].end(), it) - b[2].begin();
-
-		if (g < 0) g++;
-		if (h < 0) h++;
-		EVARS(g, h, it);
-		for (int r = g; r < g + 2 && r < b[1].size(); r++) {
-			for (int c = h; c < h + 2 && c < b[2].size(); c++) {
-				ll k = (it - b[1][r]) * (it - b[1][r]) +
-					   (it - b[2][c]) * (it - b[2][c]) +
-					   (b[2][c] - b[1][r]) * (b[2][c] - b[1][r]);
-				res = min(res, k);
-			}
-		}
-	}
-
-	cout << res << endl;
-	EVARS(res);
-	return 0;
+};
+Cube *getCube() {
+	Cube myCube;
+	myCube.setSize(4);
+	return &myCube;
 }
-
 int main() {
-	dragonforce();
-	test() {
-		solve();
-	}
+	Cube *myCube = getCube();
+	int x = 5;
+	cout << x * ((*myCube).getVolume()) << endl;
 }
+
+// int main() {
+// 	dragonforce();
+// 	int t = 1;
+// 	// cin >> t;
+
+// 	while (t--) {
+// 		solve();
+// 	}
+// }

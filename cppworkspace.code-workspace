@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"C_Cpp.autoAddFileAssociations": false,
+		"editor.wordWrapColumn": 100,
+		"files.autoSave": "afterDelay",
+		"git.enabled": false
+	}
+}

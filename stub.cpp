@@ -1,34 +1,4 @@
-#include <bits/stdc++.h>
-//*****************************************************************************************************
-using namespace std;
-typedef pair<int, int> pi;
-typedef vector<int> vi;
-typedef long long ll;
-typedef unsigned long long ull;
-typedef vector<string> vs;
-//*****************************************************************************************************
-#define sz(k) k.size()
-#define ln(s) s.length()
-#define pb push_back
-#define mp make_pair
-#define all(x) x.begin(), x.end()
-#define finc(i, x, y) for (__typeof(x) i = x; i < y; i++)
-#define fdec(i, x, y) for (__typeof(x) i = x; i > y; i--)
-#define fincp(itr, x) for (__typeof(x.begin()) itr = x.begin(); itr != x.end(); itr++)
-#define fdecp(itr, x) for (auto itr = x.end() - 1; itr != x.begin() - 1; itr--)
-#define PI (acos(-1.0))
-#define E 2.71828182845904523536
-#define by(x) [](const auto &a, const auto &b) { return a.x < b.x; }
-#define grsort() [](const auto &a, const auto &b) { return a > b; }
-#define F first
-#define S second
-#define mem(a, x) memset(a, x, sizeof(a))
-#define mnv(v) *min_element(v.begin(), v.end())
-#define mxv(v) *max_element(v.begin(), v.end())
-#define pr(x) cout << fixed << setprecision(x);
-//************************************************************************************************************
+Iteration 1 : Average Distortion = 0.488701, Change in Distortion = 0.488701 Iteration 2 : Average Distortion = 0.380271, Change in Distortion = 0.108429 Iteration 3 : Average Distortion = 0.358477, Change in Distortion = 0.0217937
 
-int main()
-{
-    dragonforce();
-cd }
+																																																							  2.41293 -
+																																																							  1.12855 0.535871 0.11446 - 0.132409 - 0.313269 - 0.423732 - 0.162794 - 0.169021 - 0.0819947 0.118403 - 0.00443516 2.51343 - 0.880705 0.276482 0.349564 - 0.130607 - 0.303302 - 0.327964 - 0.167306 - 0.0492129 - 0.0113822 0.0404805 0.000787801 1.68915 - 1.96744 0.363747 0.493952 0.42528 0.494186 0.106821 - 0.153574 - 0.230703 - 0.0567651 0.193055 0.0165957 0.223457 - 1.25888 0.166681 0.611123 0.362967 0.124862 0.219758 - 0.0496505 0.0103911 0.170378 0.0977588 - 0.0446868 1.04376 - 1.86204 0.350332 1.03692 0.404568 0.272513 0.175875 - 0.147573 - 0.0265009 0.22339 0.159186 - 0.0379955 2.04428 - 0.571701 0.92015 0.579178 0.088794 0.148743 - 0.0675741 - 0.15816 - 0.0133674 - 0.125343 - 0.0991172 0.0474103 1.52957 - 0.662561 0.252976 0.265816 0.221237 0.418415 0.341355 0.028985 - 0.0734963 0.0745788 0.0843414 0.0157658 1.93314 - 0.674735 0.881655 0.854127 0.0196997 0.081943 0.160604 - 0.140231 - 0.123818 - 0.0367614 - 0.0840892 - 0.0700757

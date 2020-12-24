@@ -62,13 +62,17 @@ inline void __evars(vector<string>::iterator it, T a, Args... args) {
 	long long o; \
 	cin >> o;    \
 	while (o--)
-#define input(vec) for (unsigned int c = 0; c<vec.size(); cin>> vec[c++])
 #define output(vec, x)                                                 \
 	{                                                                  \
 		for (unsigned int c = 0; c < vec.size(); x << vec[c++] << ' ') \
 			;                                                          \
 		x << endl;                                                     \
 	}
+#define input(vec)                                              \
+	for (unsigned int dfadf = 0; dfadf < vec.size(); dfadf++) { \
+		cin >> vec[dfadf];                                      \
+	}
+
 #define sz(k) k.size()
 #define ln(s) s.length()
 #define pb push_back
@@ -96,19 +100,20 @@ inline void __evars(vector<string>::iterator it, T a, Args... args) {
 #define N 100005
 int r, c, n, k, m;	//predeclared control variables for loops
 //************************************************************************************************************
-int solve() {
+
+void solve() {
 	int n;
-	cin>>n ;
+	cin >> n;
 	vi a(n);
 	input(a);
-
-	
-	return 0;
 }
 
 int main() {
 	dragonforce();
-	test() {
+	int t = 1;
+	cin >> t;
+
+	while (t--) {
 		solve();
 	}
 }

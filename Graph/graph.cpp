@@ -1,5 +1,8 @@
 // using adjancency list
 #include <bits/stdc++.h>
+
+#include <algorithm>
+#include <vector>
 #define sz(a) a.size()
 #define pb push_back
 using namespace std;
@@ -61,7 +64,7 @@ public:
 		}
 	}
 
-	void dfs(int t) {
+	void dfs() {
 		vector<int> visited(n);
 		for (int i = 1; i < n; i++) {
 			if (!visited[i]) dfsUtil(i, visited);
@@ -81,6 +84,7 @@ public:
 		vi visited(n);
 		vi res;
 		topologicalSortUtil(itr, visited, res);
+		reverse(res.begin(), res.end());
 		return res;
 	}
 

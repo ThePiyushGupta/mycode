@@ -47,7 +47,7 @@ typedef vector<string> vs;
 #define mnv(v) *min_element(v.begin(), v.end())
 #define mxv(v) *max_element(v.begin(), v.end())
 #define pr(x) cout << fixed << setprecision(x);
-int r, c, n, k;  //predeclared control variables for loops
+int r, c, n, k;	 //predeclared control variables for loops
 #define N 50005
 //************************************************************************************************************
 //                                                GSS1 Spoj
@@ -88,17 +88,15 @@ int querys(int l, int r) {
 
 void modify(int pos, int val) {
 	segtree[pos += n].fill(val);
-	while (pos >>= 1)
+	while (pos >= 1)
 		segtree[pos].merge(segtree[pos << 1], segtree[(pos << 1) + 1]);
 }
 
-class asdf{
-	public:
-		const int k;
-		asdf(int z): k(z)
-		{
-
-		}
+class asdf {
+public:
+	const int k;
+	asdf(int z) : k(z) {
+	}
 };
 
 int main() {
