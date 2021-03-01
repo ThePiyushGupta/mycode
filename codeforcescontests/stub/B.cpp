@@ -102,16 +102,36 @@ int r, c, n, k, m;	//predeclared control variables for loops
 //************************************************************************************************************
 
 void solve() {
-	int n;
-	cin >> n;
-	vi a(n);
-	input(a);
+	int k = 0;
+	cout << 1 << endl;
+	cout << 1000 << endl;
+	cout << 1000 << endl;
+	vector<int> st;
+	int temp;
+	while (cin >> temp) st.push_back(temp);
+	reverse(all(st));
+	// cerr << *(st.end() - 2) << ' ' << st.size() << endl;
+
+	for (int c = 0; c < 1000; ++c) {
+		cout << c << ' ';
+		vector<int> deps;
+		while (st.size() && st.back() <= c) {
+			if (st.back() != c) {
+				deps.push_back(st.back());
+			}
+			st.pop_back();
+		}
+		cout << deps.size() << ' ';
+		for (int r = 0; r < deps.size(); ++r)
+			cout << deps[r] << ' ';
+		cout << endl;
+	}
 }
 
 int main() {
 	dragonforce();
 	int t = 1;
-	cin >> t;
+	// cin >> t;
 
 	while (t--) {
 		solve();

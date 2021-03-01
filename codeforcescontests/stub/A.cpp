@@ -109,11 +109,33 @@ void solve() {
 }
 
 int main() {
-	dragonforce();
-	int t = 1;
-	cin >> t;
+	int t, n;
+	cin >> t >> n;
+	// cerr<<t<<n<<endl;
+	vector<vector<int>> dep(n);
+	for (int c = 0; c < n; ++c) {
+		// cerr << c << ' ';
+		int k;
+		cin >> k;
+		// cerr << k << ':';
+		int r;
+		cin >> r;
+		while (r--) {
+			cin >> k;
+			dep[c].push_back(k);
+		}
+	}
+	cout << t << endl;
+	for (int c = 0; c < t; ++c) cout << n << ' ';
+	cout << endl
+		 << t * n << endl;
 
-	while (t--) {
-		solve();
+	for (int k = 0; k < t; ++k) {
+		int offset = k * n;
+		for (int c = 0; c < n; ++c) {
+			cout << c + offset << ' ' << dep[c].size() << ' ';
+			for (int r = 0; r < dep[c].size(); ++r) cout << dep[c][r] + offset << ' ';
+			cout << endl;
+		}
 	}
 }

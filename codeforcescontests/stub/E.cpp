@@ -100,12 +100,23 @@ inline void __evars(vector<string>::iterator it, T a, Args... args) {
 #define N 100005
 int r, c, n, k, m;	//predeclared control variables for loops
 //************************************************************************************************************
+map<pi, int> idk;
+int find(int a, int b, int ct) {
+	// if (idk.count({a, b})) return idk[{a, b}];
+	// EVARS(a, b);
+	if (a < b) return 1;
+	if (b == 1) return 1 + find(a, b + 1, ct + 1);
+	if (ct < 35)
+		return min(1 + find(a / b, b, ct), 1 + find(a, b + 1, ct + 1));
+	else
+		return 1 + find(a / b, b, ct);
+}
 
 void solve() {
-	int n;
-	cin >> n;
-	vi a(n);
-	input(a);
+	int a, b;
+	cin >> a >> b;
+
+	cout << find(a, b, 0) << endl;
 }
 
 int main() {

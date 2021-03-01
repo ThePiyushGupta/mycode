@@ -8,12 +8,12 @@ ifeq ($(str),ha)
   flags=$(flags2)
 endif
 
-all: a.out
-	$ timeout 50 ./a.out <${input} >${output}  
+all: ${name}.out
+	$ timeout 5 ./${name}.out <${input} >${output}  
 
-a.out :${name}.cpp
+${name}.out :${name}.cpp
 
-	$ g++ ${flags} $^
+	$ g++ ${flags} -o ${name}.out $^
 
 
 
