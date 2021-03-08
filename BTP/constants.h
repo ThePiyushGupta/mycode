@@ -1,8 +1,8 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
-#define ZONECT 2
-#define GRPCT 3
-#define MAXGRPSZ 50
-#define MAXZONECT 100
-#define BATCHSZ 5
+int ZONECT = 5;
+#define GRPCT 10
+#define MAXGRPSZ 2000
+#define MAXZONECT 30000
+// #define BATCHSZ 100
 #endif

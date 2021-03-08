@@ -4,16 +4,20 @@
 #include "utils.cpp"
 using namespace std;
 
+int BATCHSZ = 100;
+
 void rearrange2(vector<int> &shuffpos) {
-	unordered_map<int, int> mymap;
-	for (int c = 0; c < shuffpos.size(); ++c) mymap[shuffpos[c]] += 1;
+	unordered_map<int, vector<int>> mymap;
+
+	for (int c = 0; c < shuffpos.size(); ++c) mymap[shuffpos[c] / 1000].push_back(shuffpos[c]);
 	// dbgv(shuffpos);
 
 	shuffpos.clear();
 
 	vector<vector<int>> temp;
 	for (auto &it : mymap) {
-		temp.push_back({it.first, it.second});
+		temp.push_back({it.first, int(it.second.size())});
+		reverse(it.second.begin(), it.second.end());
 	}
 
 	sort(temp.begin(), temp.end(), [](vector<int> &a, vector<int> &b) {
@@ -57,7 +61,13 @@ void rearrange2(vector<int> &shuffpos) {
 		} else
 			q.advance();
 	}
-	// cerr << "HERE2" << endl;
+
+	for (int c = 0; c < shuffpos.size(); ++c) {
+		int k = mymap[shuffpos[c]].back();
+		mymap[shuffpos[c]].pop_back();
+		shuffpos[c] = k;
+	}
+	// dbgv(shuffpos)
 }
 
 void rearrange(vector<int> &shuffpos) {
@@ -158,10 +168,11 @@ void scheduleNew(float alpha, float beta) {
 	cerr << calcCV() << ' ' << calcNS(res) << endl;
 }
 
-void scheduleNewOnline(float alpha, float beta, vector<int> shuffpos) {
+void scheduleNewOnline(float alpha, float beta, vector<int> shuffpos, ofstream &myfile) {
 	reloadInputs();
 	Alpha = alpha, Beta = beta;
 	vector<int> res(APPSCT);
+	// cerr << BATCHSZ << endl;
 
 	for (int c = 0; c < APPSCT; c += BATCHSZ) {
 		vector<int> temp;
@@ -173,13 +184,19 @@ void scheduleNewOnline(float alpha, float beta, vector<int> shuffpos) {
 
 		// cerr << "HERE" << endl;
 		for (int r = 0; r < BATCHSZ && r + c < APPSCT; ++r) {
-			res[begg[temp[r]]] = schedule(begg[temp[r]], res);
-			begg[temp[r]]++;
+			// cerr << temp[r] << ' ';
+			res[temp[r]] = schedule(temp[r], res);
+			// begg[temp[r]]++;
 		}
 	}
-	// cerr << "HERE" << endl;
 
-	cerr << calcCV() << ' ' << calcNS(res) << endl;
+	// for (int c = 0; c < shuffpos.size(); ++c) {
+	// 	cerr << shuffpos[c] << ' ';
+	// 	res[shuffpos[c]] = schedule(shuffpos[c], res);
+	// }
+
+	// cerr << "HERE" << endl;
+	myfile << calcCV() << ' ' << calcNS(res) << endl;
 }
 
 int main() {
@@ -189,24 +206,46 @@ int main() {
 
 	vector<int> shuffpos;
 	reloadInputs();
+	cerr << "INPUT RELOADED" << endl;
 
-	for (int c = 0; c < begg.size(); ++c) {
-		for (int r = begg[c]; r < endg[c]; ++r) shuffpos.push_back(c);
-	}
+	// for (int c = 0; c < begg.size(); ++c) {
+	// 	for (int r = begg[c]; r < endg[c]; ++r) shuffpos.push_back(c);
+	// }
 
 	vector<int> alpha = {1};
-	// vector<int> alpha = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 1000};
-	for (auto &it : alpha) {
-		cerr << "Paper's Algo: ";
-		shuffle_array(shuffpos);
-		schedule(it, 1.0, shuffpos);
+	shuffle_array(shuffpos);
+	// cerr << "INPUT RELOADED" << endl;
+	// dbgv(shuffpos);
+	// cerr << endl;
+	// dbgv(et);
 
-		cerr << "Our Algo: ";
-		scheduleNew(it, 1.0);
+	// schedule(1, 1.0, shuffpos);
+	// schedule(1, 1.0, shuffpos);
 
-		cerr << "Onl Algo: ";
-		scheduleNewOnline(it, 1.0, shuffpos);
-		cerr << endl;
+	// vector<int> alpha = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000};
+
+	for (int zc = 1; zc < 20; ++zc) {
+		ZONECT = zc;
+		ofstream myfile;
+		myfile.open("output" + to_string(zc) + ".txt");
+
+		for (int c = 1; c <= 10000; ++c) {
+			BATCHSZ = c;
+			// cerr << "Paper's Algo: ";
+			// schedule(1, 1.0, shuffpos);
+
+			// cerr << "Our Algo: ";
+			// scheduleNew(1, 1.0);
+
+			myfile << c << ' ';
+			scheduleNewOnline(1, 1.0, shuffpos, myfile);
+
+			// cerr << "Simple RR Algo: ";
+			// scheduleRR(it, 1.0);
+			// cerr << endl;
+		}
+		myfile.close();
 	}
+
 	return 0;
 }

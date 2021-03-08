@@ -11,6 +11,7 @@ vector<vector<int>> D;	// Dependency matrix
 vector<vector<int>> T;	// Transport Matrix
 vector<int> begg, endg;
 vector<int> zc;
+vector<int> et;
 float nf = ZONECT * ZONECT * 100 - ZONECT * 90;
 float Alpha, Beta;
 
@@ -21,8 +22,12 @@ void genT() {
 }
 
 void shuffle_array(vector<int> &foo) {
-	unsigned seed = chrono::system_clock::now().time_since_epoch().count();
-	shuffle(foo.begin(), foo.end(), default_random_engine(seed));
+	vector<pair<int, int>> idk;
+	for (int c = 0; c < et.size(); ++c) idk.push_back({et[c], c});
+	sort(idk.begin(), idk.end());
+	for (auto &it : idk) {
+		foo.push_back(it.second);
+	}
 }
 
 float calcNS(vector<int> &res) {
@@ -55,10 +60,12 @@ void loadAppsData() {
 
 	myfile >> temp;
 	D.resize(temp);
+	// et.push_back(temp);
 
 	for (int r = 0; r < D.size(); ++r) {
-		int id, ct = 0;
-		myfile >> id >> ct;
+		int id, ct = 0, tm;
+		myfile >> id >> tm >> ct;
+		et.push_back(tm);
 		for (int c = 0; c < ct; ++c) {
 			myfile >> temp;
 			D[id].push_back(temp);
