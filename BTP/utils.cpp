@@ -24,7 +24,9 @@ void genT() {
 void shuffle_array(vector<int> &foo) {
 	vector<pair<int, int>> idk;
 	for (int c = 0; c < et.size(); ++c) idk.push_back({et[c], c});
-	sort(idk.begin(), idk.end());
+	sort(idk.begin(), idk.end(), [](auto &a, auto &b) {
+		return a.first < b.first;
+	});
 	for (auto &it : idk) {
 		foo.push_back(it.second);
 	}

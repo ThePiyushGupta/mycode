@@ -49,11 +49,9 @@ void rearrange2(vector<int> &shuffpos) {
 	while (q.curr != NULL) {
 		Node *curr = q.curr;
 		int k = curr->val;
-		// cerr << k << endl;
-		shuffpos.push_back(temp[k][0]);
 
+		shuffpos.push_back(temp[k][0]);
 		temp[k][1]--;
-		// cerr << "HERE3" << endl;
 
 		if (temp[k][1] == 0) {
 			rem--;
@@ -69,6 +67,23 @@ void rearrange2(vector<int> &shuffpos) {
 	}
 	// dbgv(shuffpos)
 }
+/*
+Create an array G containing groups and sort based on decreasing group size
+Create a circular queue C
+Initialize order O
+int ct = 0
+while(ct<num(groups) && ct < num(zones)) 
+	q.insert(ct)
+	ct = ct + 1
+while(ct != num(groups)) 
+	insert a task from the task group at the front of the queue into O
+	if no more tasks are left to be scheduled from the task group replace the task group with another task group
+	advance head of C by 1
+while(C is not empty)
+	insert a task from the task group at the front of the queue into O
+	if no more tasks are left to be scheduled from the task group remove the task group from C
+	advance head of C by 1 
+*/
 
 void rearrange(vector<int> &shuffpos) {
 	vector<vector<int>> temp;
@@ -199,14 +214,15 @@ void scheduleNewOnline(float alpha, float beta, vector<int> shuffpos, ofstream &
 	myfile << calcCV() << ' ' << calcNS(res) << endl;
 }
 
-int main() {
+int main(int argc, char *argv[]) {
 	// system("./TestDataGenerator");
 	// cerr << fixed << setprecision(4);
 	// cout << fixed << setprecision(4);
 
 	vector<int> shuffpos;
 	reloadInputs();
-	cerr << "INPUT RELOADED" << endl;
+	cerr << "INPUT RELOADED"
+		 << "\n";
 
 	// for (int c = 0; c < begg.size(); ++c) {
 	// 	for (int r = begg[c]; r < endg[c]; ++r) shuffpos.push_back(c);
@@ -224,28 +240,33 @@ int main() {
 
 	// vector<int> alpha = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000};
 
-	for (int zc = 1; zc < 20; ++zc) {
-		ZONECT = zc;
-		ofstream myfile;
-		myfile.open("output" + to_string(zc) + ".txt");
+	// for (int zc = 1; zc < 20; ++zc) {
+	int zc = 10;
+	// cerr << argc << endl;
 
-		for (int c = 1; c <= 10000; ++c) {
-			BATCHSZ = c;
-			// cerr << "Paper's Algo: ";
-			// schedule(1, 1.0, shuffpos);
+	if (argc != 1) zc = stoi(argv[1]);
+	ZONECT = zc;
+	ofstream myfile;
+	// cerr << "HERE" << endl;
+	myfile.open("output" + to_string(zc) + ".txt");
 
-			// cerr << "Our Algo: ";
-			// scheduleNew(1, 1.0);
+	for (int c = 1; c <= 100; ++c) {
+		BATCHSZ = c;
+		// cerr << "Paper's Algo: ";
+		// schedule(1, 1.0, shuffpos);
 
-			myfile << c << ' ';
-			scheduleNewOnline(1, 1.0, shuffpos, myfile);
+		// cerr << "Our Algo: ";
+		// scheduleNew(1, 1.0);
 
-			// cerr << "Simple RR Algo: ";
-			// scheduleRR(it, 1.0);
-			// cerr << endl;
-		}
-		myfile.close();
+		myfile << c << ' ';
+		scheduleNewOnline(1, 1.0, shuffpos, myfile);
+
+		// cerr << "Simple RR Algo: ";
+		// scheduleRR(it, 1.0);
+		// cerr << endl;
 	}
+	myfile.close();
+	// }
 
 	return 0;
 }
